@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BaseFormation : MonoBehaviour
 {
     [SerializeField] protected GameObject unitPrefab;
+    protected NavMeshAgent agent;
 
     virtual protected void Awake()
     {
-        
+        agent = GetComponent<NavMeshAgent>();
     }
 
     virtual protected void Update()
