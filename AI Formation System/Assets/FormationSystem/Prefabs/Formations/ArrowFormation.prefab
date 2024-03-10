@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6644516546047326768
+--- !u!1 &3830623559689110073
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,64 +8,65 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 769021228567628567}
-  - component: {fileID: 5574468355464647758}
-  - component: {fileID: 7345794539954236999}
+  - component: {fileID: 5277850614550946403}
+  - component: {fileID: 5505853061481757006}
+  - component: {fileID: 1663696260567251860}
   m_Layer: 0
-  m_Name: BoxFormation
+  m_Name: ArrowFormation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &769021228567628567
+--- !u!4 &5277850614550946403
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6644516546047326768}
+  m_GameObject: {fileID: 3830623559689110073}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -85.32, y: 17.071, z: 49.72}
+  m_LocalRotation: {x: -0, y: 0.6535686, z: -0, w: 0.75686735}
+  m_LocalPosition: {x: -119.5, y: 17.071, z: 52.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5574468355464647758
+  m_LocalEulerAnglesHint: {x: 0, y: 81.622, z: 0}
+--- !u!114 &5505853061481757006
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6644516546047326768}
+  m_GameObject: {fileID: 3830623559689110073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 847df1acc98fe4c418171a316776923d, type: 3}
+  m_Script: {fileID: 11500000, guid: fe3f7eccef2cc4343b53e899b52f536d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 0}
-  stepSpeed: 0
+  unitPrefab: {fileID: 5652320681741433874, guid: 4375d5c7ebe49dd4986e81e9c0187472, type: 3}
+  stepSpeed: 10
   target: {x: 0, y: 0, z: 0}
-  boxValues:
+  arrowValues:
     noise: 0
-    spacing: {x: 0, y: 0}
+    spacing: {x: 3, y: 3}
+    sharpness: 3
     nthShift: 0
     evenShift: 0
-    size: {x: 0, y: 0}
+    size: {x: 7, y: 5}
     hollow: 0
     refreshNoise: 0
---- !u!195 &7345794539954236999
+--- !u!195 &1663696260567251860
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6644516546047326768}
+  m_GameObject: {fileID: 3830623559689110073}
   m_Enabled: 1
   m_AgentTypeID: -334000983
-  m_Radius: 20
+  m_Radius: 15
   m_Speed: 10
   m_Acceleration: 4
   avoidancePriority: 50
