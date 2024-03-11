@@ -2574,7 +2574,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8784200783844102287, guid: 189c3feccfa146547b9e36cc6666aded, type: 3}
       propertyPath: triangleValues.rows
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8784200783844102287, guid: 189c3feccfa146547b9e36cc6666aded, type: 3}
       propertyPath: triangleValues.noise
@@ -2585,12 +2585,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8784200783844102287, guid: 189c3feccfa146547b9e36cc6666aded, type: 3}
+      propertyPath: triangleValues.nthShift
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8784200783844102287, guid: 189c3feccfa146547b9e36cc6666aded, type: 3}
+      propertyPath: triangleValues.evenShift
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8784200783844102287, guid: 189c3feccfa146547b9e36cc6666aded, type: 3}
       propertyPath: triangleValues.incPerRow
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8784200783844102287, guid: 189c3feccfa146547b9e36cc6666aded, type: 3}
       propertyPath: triangleValues.spacing.x
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8784200783844102287, guid: 189c3feccfa146547b9e36cc6666aded, type: 3}
       propertyPath: triangleValues.spacing.y

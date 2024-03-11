@@ -11,18 +11,36 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        Move();
-        Rotate();
+        StateCheck();
     }
 
-    private void Move()
+    private void StateCheck()
     {
-        transform.position = Vector3.MoveTowards(transform.position, destination, speed * Time.deltaTime);
+        switch (state)
+        {
+            case UnitState.None:
+                break;
+            case UnitState.Formation:
+                Move(destination);
+                Rotate(destination);
+                break;
+            case UnitState.Standby:
+                break;
+            case UnitState.Detected:
+                break;
+            case UnitState.Attacking:
+                break;
+        }
     }
 
-    private void Rotate()
+    private void Move(Vector3 target)
     {
-        Vector3 lookPos = destination-transform.position;
+        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+    }
+
+    private void Rotate(Vector3 target)
+    {
+        Vector3 lookPos = target-transform.position;
         lookPos.y = transform.position.y;
         transform.LookAt(lookPos);
     }
