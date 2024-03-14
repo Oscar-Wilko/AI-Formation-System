@@ -5,13 +5,13 @@ using UnityEngine;
 public class TriangleFormation : BaseFormation
 {
     [Header("Tweak Values")]
-    [SerializeField] private TriangleValues triangleValues;
+    public TriangleValues triangleValues;
     private List<GameObject> units = new List<GameObject>();
 
-    protected override void Awake()
+    protected override void Start()
     {
         units = GenerateUnits(GeneratePositions(triangleValues), "Triangle Formation");
-        base.Awake();
+        base.Start();
     }
 
     protected override void Update()

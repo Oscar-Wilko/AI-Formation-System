@@ -5,13 +5,13 @@ using UnityEngine;
 public class ArrowFormation : BaseFormation
 {
     [Header("Tweak Values")]
-    [SerializeField] private ArrowValues arrowValues;
+    public ArrowValues arrowValues;
     private List<GameObject> units = new List<GameObject>();
 
-    protected override void Awake()
+    protected override void Start()
     {
         units = GenerateUnits(GeneratePositions(arrowValues), "Arrow Formation");
-        base.Awake();
+        base.Start();
     }
 
     protected override void Update()

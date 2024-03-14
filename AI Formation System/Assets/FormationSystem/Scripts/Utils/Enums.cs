@@ -9,9 +9,9 @@ public enum UnitState
 
 public enum FormationType
 {
-    Box,
-    Arrow,
-    Triangle
+    Box = 0,
+    Arrow = 1,
+    Triangle = 2
 }
 
 public enum ValueType

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -36,4 +37,20 @@ public struct TriangleValues
     [SerializeField] public int incPerRow;
     [SerializeField] public bool hollow;
     [SerializeField] public bool refreshNoise;
+}
+
+[System.Serializable]
+public struct FormationLog
+{
+    public FormationType type;
+    public Vector2 position;
+    public BoxValues boxValues;
+    public ArrowValues arrowValues;
+    public TriangleValues triangleValues;
+}
+
+[System.Serializable]
+public class FullFormation
+{
+    public List<FormationLog> logs;
 }

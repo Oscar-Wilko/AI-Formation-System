@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847df1acc98fe4c418171a316776923d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 0}
-  stepSpeed: 0
+  unitPrefab: {fileID: 5652320681741433874, guid: 4375d5c7ebe49dd4986e81e9c0187472, type: 3}
+  stepSpeed: 10
   target: {x: 0, y: 0, z: 0}
   boxValues:
     noise: 0
@@ -65,7 +65,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 6644516546047326768}
   m_Enabled: 1
   m_AgentTypeID: -334000983
-  m_Radius: 20
+  m_Radius: 10
   m_Speed: 10
   m_Acceleration: 4
   avoidancePriority: 50

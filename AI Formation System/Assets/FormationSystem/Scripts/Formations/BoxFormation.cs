@@ -5,13 +5,13 @@ using UnityEngine;
 public class BoxFormation : BaseFormation
 {
     [Header("Tweak Values")]
-    [SerializeField] private BoxValues boxValues;
+    public BoxValues boxValues;
     private List<GameObject> units = new List<GameObject>();
 
-    protected override void Awake()
+    protected override void Start()
     {
         units = GenerateUnits(GeneratePositions(boxValues), "Box Formation");
-        base.Awake();
+        base.Start();
     }
 
     protected override void Update()

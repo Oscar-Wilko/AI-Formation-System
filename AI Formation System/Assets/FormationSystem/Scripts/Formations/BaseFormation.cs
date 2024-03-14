@@ -11,7 +11,7 @@ public class BaseFormation : MonoBehaviour
     protected NavMeshAgent agent;
     protected List<Vector2> noiseGrid = new List<Vector2>();
 
-    virtual protected void Awake()
+    virtual protected void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         MoveToTarget();
@@ -29,7 +29,8 @@ public class BaseFormation : MonoBehaviour
 
     protected void MoveToTarget()
     {
-        agent.SetDestination(target);
+        if (agent.enabled)
+            agent.SetDestination(target);
     }
 
     protected void GizmoDraw(List<Vector2> positions)
@@ -64,8 +65,9 @@ public class BaseFormation : MonoBehaviour
 
         foreach (Vector2 pos in grid)
         {
-            float y_pos = Utils.RayDown(pos);
+            float y_pos = Utils.RayDown(new Vector2(transform.position.x, transform.position.z) + pos);
             GameObject unit = Instantiate(unitPrefab, new Vector3(transform.position.x + pos.x, y_pos + 1, transform.position.z + pos.y), Quaternion.identity, boxParent);
+            Debug.Log(unit.transform.position.y);
             unit.GetComponent<Unit>().SetSpeed(stepSpeed);
             units.Add(unit);
         }
