@@ -10,10 +10,12 @@ public class BaseFormation : MonoBehaviour
     public Vector3 target;
     protected NavMeshAgent agent;
     protected List<Vector2> noiseGrid = new List<Vector2>();
+    protected List<GameObject> units = new List<GameObject>();
 
     virtual protected void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        AdjustRadius();
         MoveToTarget();
     }
 
@@ -67,10 +69,22 @@ public class BaseFormation : MonoBehaviour
         {
             float y_pos = Utils.RayDown(new Vector2(transform.position.x, transform.position.z) + pos);
             GameObject unit = Instantiate(unitPrefab, new Vector3(transform.position.x + pos.x, y_pos + 1, transform.position.z + pos.y), Quaternion.identity, boxParent);
-            Debug.Log(unit.transform.position.y);
             unit.GetComponent<Unit>().SetSpeed(stepSpeed);
             units.Add(unit);
         }
         return units;
+    }
+
+    protected void AdjustRadius()
+    {
+        float newRadius = 1;
+        foreach(GameObject unit in units)
+        {
+            newRadius = Mathf.Max(newRadius, Vector2.Distance(
+                new Vector2(unit.transform.position.x, unit.transform.position.z), 
+                new Vector2(transform.position.x, transform.position.z))*0.8f);
+        }
+
+        agent.radius = newRadius;
     }
 }

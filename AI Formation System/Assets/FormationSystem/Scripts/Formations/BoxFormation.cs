@@ -6,17 +6,16 @@ public class BoxFormation : BaseFormation
 {
     [Header("Tweak Values")]
     public BoxValues boxValues;
-    private List<GameObject> units = new List<GameObject>();
 
     protected override void Start()
     {
-        units = GenerateUnits(GeneratePositions(boxValues), "Box Formation");
+        units = GenerateUnits(GenPos(), "Box Formation");
         base.Start();
     }
 
     protected override void Update()
     {
-        UpdateUnits(GeneratePositions(boxValues), units);
+        UpdateUnits(GenPos(), units);
         base.Update();
     }
 
@@ -27,10 +26,12 @@ public class BoxFormation : BaseFormation
 
     private void OnDrawGizmos()
     {
-        GizmoDraw(GeneratePositions(boxValues));
+        GizmoDraw(GenPos());
     }
 
-    private List<Vector2> GeneratePositions(BoxValues val)
+    private List<Vector2> GenPos() => GeneratePositions(boxValues, noiseGrid, transform.localEulerAngles.y);
+
+    public static List<Vector2> GeneratePositions(BoxValues val, List<Vector2> noiseGrid, float angle)
     {
         List<Vector2> positions = new List<Vector2>();
         Vector2 fullSize = new Vector2(val.nthShift * val.size.y + val.spacing.x * val.size.x, val.spacing.y * val.size.y);
@@ -50,7 +51,7 @@ public class BoxFormation : BaseFormation
                 pos.y += val.spacing.y * y;     // Y spacing
                 pos += noiseGrid[x + y * val.size.x] * val.noise; // Noise shift
                 pos -= fullSize * 0.5f;         // Shift from centre
-                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -transform.localEulerAngles.y); // Rotate to forward vec
+                pos = Utils.Rotate(pos, Mathf.Deg2Rad * - angle); // Rotate to forward vec
                 positions.Add(pos);
             }
         }

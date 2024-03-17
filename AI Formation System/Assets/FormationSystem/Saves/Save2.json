@@ -1,10 +1,61 @@
 {
     "logs": [
         {
+            "type": 1,
+            "position": {
+                "x": -7.260009765625,
+                "y": 237.90576171875
+            },
+            "boxValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "nthShift": 0.0,
+                "evenShift": 0.0,
+                "size": {
+                    "x": 0,
+                    "y": 0
+                },
+                "hollow": false,
+                "refreshNoise": false
+            },
+            "arrowValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 5.0,
+                    "y": 1.7400000095367432
+                },
+                "sharpness": 3.759999990463257,
+                "nthShift": 0.0,
+                "evenShift": 3.4700000286102297,
+                "size": {
+                    "x": 7,
+                    "y": 10
+                },
+                "hollow": false,
+                "refreshNoise": false
+            },
+            "triangleValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "nthShift": 0.0,
+                "evenShift": 0.0,
+                "rows": 0,
+                "incPerRow": 0,
+                "hollow": false,
+                "refreshNoise": false
+            }
+        },
+        {
             "type": 0,
             "position": {
-                "x": -285.37518310546877,
-                "y": -281.46600341796877
+                "x": -162.5130615234375,
+                "y": 31.27398681640625
             },
             "boxValues": {
                 "noise": 0.0,
@@ -54,8 +105,8 @@
         {
             "type": 0,
             "position": {
-                "x": 292.0767822265625,
-                "y": -311.623046875
+                "x": 146.8760986328125,
+                "y": 29.04010009765625
             },
             "boxValues": {
                 "noise": 0.0,
@@ -103,10 +154,10 @@
             }
         },
         {
-            "type": 1,
+            "type": 2,
             "position": {
-                "x": -7.260009765625,
-                "y": 237.90576171875
+                "x": 5.02618408203125,
+                "y": -128.44680786132813
             },
             "boxValues": {
                 "noise": 0.0,
@@ -126,15 +177,117 @@
             "arrowValues": {
                 "noise": 0.0,
                 "spacing": {
-                    "x": 1.46999990940094,
-                    "y": 1.7400000095367432
+                    "x": 0.0,
+                    "y": 0.0
                 },
-                "sharpness": 3.759999990463257,
+                "sharpness": 0.0,
                 "nthShift": 0.0,
                 "evenShift": 0.0,
                 "size": {
-                    "x": 6,
+                    "x": 0,
+                    "y": 0
+                },
+                "hollow": false,
+                "refreshNoise": false
+            },
+            "triangleValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 2.2100000381469728,
+                    "y": 3.0799999237060549
+                },
+                "nthShift": 0.0,
+                "evenShift": 0.0,
+                "rows": 4,
+                "incPerRow": 3,
+                "hollow": false,
+                "refreshNoise": false
+            }
+        },
+        {
+            "type": 0,
+            "position": {
+                "x": -212.77484130859376,
+                "y": -233.43807983398438
+            },
+            "boxValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 2.549999952316284,
+                    "y": 2.3499999046325685
+                },
+                "nthShift": 0.0,
+                "evenShift": 2.990000009536743,
+                "size": {
+                    "x": 5,
                     "y": 5
+                },
+                "hollow": false,
+                "refreshNoise": false
+            },
+            "arrowValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "sharpness": 0.0,
+                "nthShift": 0.0,
+                "evenShift": 0.0,
+                "size": {
+                    "x": 0,
+                    "y": 0
+                },
+                "hollow": false,
+                "refreshNoise": false
+            },
+            "triangleValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "nthShift": 0.0,
+                "evenShift": 0.0,
+                "rows": 0,
+                "incPerRow": 0,
+                "hollow": false,
+                "refreshNoise": false
+            }
+        },
+        {
+            "type": 0,
+            "position": {
+                "x": 229.52880859375,
+                "y": -234.55499267578126
+            },
+            "boxValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 3.0199999809265138,
+                    "y": 2.8299999237060549
+                },
+                "nthShift": 0.0,
+                "evenShift": 3.559999942779541,
+                "size": {
+                    "x": 5,
+                    "y": 5
+                },
+                "hollow": false,
+                "refreshNoise": false
+            },
+            "arrowValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "sharpness": 0.0,
+                "nthShift": 0.0,
+                "evenShift": 0.0,
+                "size": {
+                    "x": 0,
+                    "y": 0
                 },
                 "hollow": false,
                 "refreshNoise": false

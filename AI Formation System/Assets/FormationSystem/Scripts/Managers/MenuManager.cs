@@ -8,6 +8,7 @@ public class MenuManager : MonoBehaviour
 {
     public Transform saveParent;
     public GameObject savePrefab;
+    [SerializeField] private Button editButton;
     [SerializeField] private Button simulateButton;
 
     private void Awake()
@@ -25,6 +26,7 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
+        editButton.interactable = SaveSystem.saveIndex >= 0;
         simulateButton.interactable = SaveSystem.saveIndex >= 0;
     }
 

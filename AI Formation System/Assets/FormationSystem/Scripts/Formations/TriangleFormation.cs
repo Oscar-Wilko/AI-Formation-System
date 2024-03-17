@@ -6,17 +6,16 @@ public class TriangleFormation : BaseFormation
 {
     [Header("Tweak Values")]
     public TriangleValues triangleValues;
-    private List<GameObject> units = new List<GameObject>();
 
     protected override void Start()
     {
-        units = GenerateUnits(GeneratePositions(triangleValues), "Triangle Formation");
+        units = GenerateUnits(GenPos(), "Triangle Formation");
         base.Start();
     }
 
     protected override void Update()
     {
-        UpdateUnits(GeneratePositions(triangleValues), units);
+        UpdateUnits(GenPos(), units);
         base.Update();
     }
 
@@ -27,13 +26,14 @@ public class TriangleFormation : BaseFormation
 
     private void OnDrawGizmos()
     {
-        GizmoDraw(GeneratePositions(triangleValues));
+        GizmoDraw(GenPos());
     }
 
-    private List<Vector2> GeneratePositions(TriangleValues val)
+    private List<Vector2> GenPos() => GeneratePositions(triangleValues, noiseGrid, transform.localEulerAngles.y);
+
+    public static List<Vector2> GeneratePositions(TriangleValues val, List<Vector2> noiseGrid, float angle)
     {
         List<Vector2> positions = new List<Vector2>();
-        Vector2 fullSize = new Vector2(0,0);
         if (val.refreshNoise || noiseGrid.Count == 0 || noiseGrid.Count != TriangleCount(val))
             noiseGrid = Utils.NoiseArray(TriangleCount(val));
         val.refreshNoise = false;
@@ -51,8 +51,8 @@ public class TriangleFormation : BaseFormation
                 pos.x += val.spacing.x * (i - (rowCount-1) * 0.5f);  // X spacing (with triangle offset)
                 pos.y -= val.spacing.y * r; // Y spacing
                 pos += noiseGrid[index] * val.noise; // Noise shift
-                pos -= fullSize * 0.5f; // Shift from centre
-                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -transform.localEulerAngles.y); // Rotate to forward vec
+                pos.y += val.spacing.y * (val.rows - 1) * 0.5f; // Shift from centre
+                pos = Utils.Rotate(pos, Mathf.Deg2Rad * - angle); // Rotate to forward vec
                 positions.Add(pos);
                 index++;
             }
@@ -61,7 +61,7 @@ public class TriangleFormation : BaseFormation
         return positions;
     }
 
-    private int TriangleCount(TriangleValues val)
+    private static int TriangleCount(TriangleValues val)
     {
         int count = 0;
         for(int i = 0; i < val.rows; i ++)

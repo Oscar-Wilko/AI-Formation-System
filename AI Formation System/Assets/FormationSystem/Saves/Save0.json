@@ -9,14 +9,14 @@
             "boxValues": {
                 "noise": 0.0,
                 "spacing": {
-                    "x": 1.809999942779541,
-                    "y": 1.6100000143051148
+                    "x": 2.549999952316284,
+                    "y": 1.809999942779541
                 },
                 "nthShift": 0.0,
-                "evenShift": 0.0,
+                "evenShift": 4.130000114440918,
                 "size": {
-                    "x": 5,
-                    "y": 5
+                    "x": 10,
+                    "y": 10
                 },
                 "hollow": false,
                 "refreshNoise": false
@@ -60,14 +60,14 @@
             "boxValues": {
                 "noise": 0.0,
                 "spacing": {
-                    "x": 1.5399999618530274,
-                    "y": 1.809999942779541
+                    "x": 2.2899999618530275,
+                    "y": 2.419999837875366
                 },
-                "nthShift": 0.0,
-                "evenShift": 0.0,
+                "nthShift": 1.5099999904632569,
+                "evenShift": 1.2699999809265137,
                 "size": {
-                    "x": 5,
-                    "y": 5
+                    "x": 10,
+                    "y": 10
                 },
                 "hollow": false,
                 "refreshNoise": false
@@ -126,15 +126,15 @@
             "arrowValues": {
                 "noise": 0.0,
                 "spacing": {
-                    "x": 1.46999990940094,
-                    "y": 1.7400000095367432
+                    "x": 3.619999885559082,
+                    "y": 2.5399999618530275
                 },
                 "sharpness": 3.759999990463257,
                 "nthShift": 0.0,
                 "evenShift": 0.0,
                 "size": {
-                    "x": 6,
-                    "y": 5
+                    "x": 9,
+                    "y": 10
                 },
                 "hollow": false,
                 "refreshNoise": false

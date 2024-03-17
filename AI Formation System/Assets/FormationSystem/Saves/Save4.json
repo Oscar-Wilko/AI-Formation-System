@@ -1,112 +1,10 @@
 {
     "logs": [
         {
-            "type": 0,
-            "position": {
-                "x": 171.4486083984375,
-                "y": -260.2443542480469
-            },
-            "boxValues": {
-                "noise": 0.14999999105930329,
-                "spacing": {
-                    "x": 3.569999933242798,
-                    "y": 3.8299999237060549
-                },
-                "nthShift": 2.119999885559082,
-                "evenShift": 0.0,
-                "size": {
-                    "x": 10,
-                    "y": 5
-                },
-                "hollow": false,
-                "refreshNoise": false
-            },
-            "arrowValues": {
-                "noise": 0.0,
-                "spacing": {
-                    "x": 0.0,
-                    "y": 0.0
-                },
-                "sharpness": 0.0,
-                "nthShift": 0.0,
-                "evenShift": 0.0,
-                "size": {
-                    "x": 0,
-                    "y": 0
-                },
-                "hollow": false,
-                "refreshNoise": false
-            },
-            "triangleValues": {
-                "noise": 0.0,
-                "spacing": {
-                    "x": 0.0,
-                    "y": 0.0
-                },
-                "nthShift": 0.0,
-                "evenShift": 0.0,
-                "rows": 0,
-                "incPerRow": 0,
-                "hollow": false,
-                "refreshNoise": false
-            }
-        },
-        {
-            "type": 0,
-            "position": {
-                "x": -196.02093505859376,
-                "y": -262.47821044921877
-            },
-            "boxValues": {
-                "noise": 0.14000000059604646,
-                "spacing": {
-                    "x": 2.950000047683716,
-                    "y": 3.490000009536743
-                },
-                "nthShift": 0.7799999713897705,
-                "evenShift": 0.0,
-                "size": {
-                    "x": 5,
-                    "y": 10
-                },
-                "hollow": false,
-                "refreshNoise": false
-            },
-            "arrowValues": {
-                "noise": 0.0,
-                "spacing": {
-                    "x": 0.0,
-                    "y": 0.0
-                },
-                "sharpness": 0.0,
-                "nthShift": 0.0,
-                "evenShift": 0.0,
-                "size": {
-                    "x": 0,
-                    "y": 0
-                },
-                "hollow": false,
-                "refreshNoise": false
-            },
-            "triangleValues": {
-                "noise": 0.0,
-                "spacing": {
-                    "x": 0.0,
-                    "y": 0.0
-                },
-                "nthShift": 0.0,
-                "evenShift": 0.0,
-                "rows": 0,
-                "incPerRow": 0,
-                "hollow": false,
-                "refreshNoise": false
-            }
-        },
-        {
             "type": 2,
             "position": {
-                "x": -264.153564453125,
-                "y": 137.3822021484375
+                "x": -118.952880859375,
+                "y": 196.57940673828126
             },
             "boxValues": {
                 "noise": 0.0,
@@ -142,73 +40,22 @@
             "triangleValues": {
                 "noise": 0.0,
                 "spacing": {
-                    "x": 2.2100000381469728,
-                    "y": 2.3499999046325685
+                    "x": 1.0,
+                    "y": 1.0
                 },
                 "nthShift": 0.0,
                 "evenShift": 0.0,
-                "rows": 5,
+                "rows": 1,
                 "incPerRow": 1,
                 "hollow": false,
                 "refreshNoise": false
             }
         },
         {
-            "type": 1,
-            "position": {
-                "x": -11.72772216796875,
-                "y": 256.8935546875
-            },
-            "boxValues": {
-                "noise": 0.0,
-                "spacing": {
-                    "x": 0.0,
-                    "y": 0.0
-                },
-                "nthShift": 0.0,
-                "evenShift": 0.0,
-                "size": {
-                    "x": 0,
-                    "y": 0
-                },
-                "hollow": false,
-                "refreshNoise": false
-            },
-            "arrowValues": {
-                "noise": 0.0,
-                "spacing": {
-                    "x": 2.2100000381469728,
-                    "y": 1.7400000095367432
-                },
-                "sharpness": 2.1499998569488527,
-                "nthShift": 0.0,
-                "evenShift": 0.0,
-                "size": {
-                    "x": 9,
-                    "y": 5
-                },
-                "hollow": false,
-                "refreshNoise": false
-            },
-            "triangleValues": {
-                "noise": 0.0,
-                "spacing": {
-                    "x": 0.0,
-                    "y": 0.0
-                },
-                "nthShift": 0.0,
-                "evenShift": 0.0,
-                "rows": 0,
-                "incPerRow": 0,
-                "hollow": false,
-                "refreshNoise": false
-            }
-        },
-        {
             "type": 2,
             "position": {
-                "x": 254.1011962890625,
-                "y": 138.4991455078125
+                "x": 69.8079833984375,
+                "y": 93.822021484375
             },
             "boxValues": {
                 "noise": 0.0,
@@ -244,12 +91,114 @@
             "triangleValues": {
                 "noise": 0.0,
                 "spacing": {
-                    "x": 2.2100000381469728,
-                    "y": 2.009999990463257
+                    "x": 1.0,
+                    "y": 1.0
                 },
                 "nthShift": 0.0,
                 "evenShift": 0.0,
-                "rows": 6,
+                "rows": 1,
+                "incPerRow": 1,
+                "hollow": false,
+                "refreshNoise": false
+            }
+        },
+        {
+            "type": 2,
+            "position": {
+                "x": 24.01397705078125,
+                "y": -75.951171875
+            },
+            "boxValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "nthShift": 0.0,
+                "evenShift": 0.0,
+                "size": {
+                    "x": 0,
+                    "y": 0
+                },
+                "hollow": false,
+                "refreshNoise": false
+            },
+            "arrowValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "sharpness": 0.0,
+                "nthShift": 0.0,
+                "evenShift": 0.0,
+                "size": {
+                    "x": 0,
+                    "y": 0
+                },
+                "hollow": false,
+                "refreshNoise": false
+            },
+            "triangleValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 1.0,
+                    "y": 1.0
+                },
+                "nthShift": 0.0,
+                "evenShift": 0.0,
+                "rows": 1,
+                "incPerRow": 1,
+                "hollow": false,
+                "refreshNoise": false
+            }
+        },
+        {
+            "type": 2,
+            "position": {
+                "x": -174.79931640625,
+                "y": 62.5479736328125
+            },
+            "boxValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "nthShift": 0.0,
+                "evenShift": 0.0,
+                "size": {
+                    "x": 0,
+                    "y": 0
+                },
+                "hollow": false,
+                "refreshNoise": false
+            },
+            "arrowValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "sharpness": 0.0,
+                "nthShift": 0.0,
+                "evenShift": 0.0,
+                "size": {
+                    "x": 0,
+                    "y": 0
+                },
+                "hollow": false,
+                "refreshNoise": false
+            },
+            "triangleValues": {
+                "noise": 0.0,
+                "spacing": {
+                    "x": 1.0,
+                    "y": 1.0
+                },
+                "nthShift": 0.0,
+                "evenShift": 0.0,
+                "rows": 1,
                 "incPerRow": 1,
                 "hollow": false,
                 "refreshNoise": false

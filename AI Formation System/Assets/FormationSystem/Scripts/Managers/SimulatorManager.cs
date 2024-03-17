@@ -12,6 +12,7 @@ public class SimulatorManager : MonoBehaviour
     [SerializeField] private Transform _formationParent;
     [SerializeField] private Transform _startPosition;
     [SerializeField] private float _distSpread;
+    [SerializeField] private Vector3 _targetPos;
 
     public void Return()
     {
@@ -23,6 +24,11 @@ public class SimulatorManager : MonoBehaviour
     {
         if (SaveSystem.saveIndex >= 0)
             Load();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(_targetPos, 2);
     }
 
     public void Load()
@@ -51,7 +57,7 @@ public class SimulatorManager : MonoBehaviour
                 default: continue;
             }
             obj.transform.SetParent(_formationParent);
-            Vector2 shiftPos = Utils.Rotate(log.position, -_startPosition.localEulerAngles.y);
+            Vector2 shiftPos = Utils.Rotate(log.position, Mathf.Deg2Rad * -_startPosition.localEulerAngles.y);
             Vector3 pos = _startPosition.position;
             pos += new Vector3(shiftPos.x, 0, shiftPos.y) * _distSpread;
             pos.y = Utils.RayDown(new Vector2(pos.x, pos.z));
@@ -62,6 +68,7 @@ public class SimulatorManager : MonoBehaviour
                 case FormationType.Arrow: obj.GetComponent<ArrowFormation>().arrowValues = log.arrowValues; break;
                 case FormationType.Triangle: obj.GetComponent<TriangleFormation>().triangleValues = log.triangleValues; break;
             }
+            obj.GetComponent<BaseFormation>().target = _targetPos;
         }
     }
 }

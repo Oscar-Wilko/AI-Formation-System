@@ -4,7 +4,8 @@ public enum UnitState
     Formation,
     Standby,
     Detected,
-    Attacking
+    Attacking,
+    Preview
 }
 
 public enum FormationType

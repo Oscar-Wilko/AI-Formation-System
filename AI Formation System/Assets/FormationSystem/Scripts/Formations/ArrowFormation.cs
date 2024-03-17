@@ -6,17 +6,16 @@ public class ArrowFormation : BaseFormation
 {
     [Header("Tweak Values")]
     public ArrowValues arrowValues;
-    private List<GameObject> units = new List<GameObject>();
 
     protected override void Start()
     {
-        units = GenerateUnits(GeneratePositions(arrowValues), "Arrow Formation");
+        units = GenerateUnits(GenPos(), "Arrow Formation");
         base.Start();
     }
 
     protected override void Update()
     {
-        UpdateUnits(GeneratePositions(arrowValues), units);
+        UpdateUnits(GenPos(), units);
         base.Update();
     }
 
@@ -27,10 +26,12 @@ public class ArrowFormation : BaseFormation
 
     private void OnDrawGizmos()
     {
-        GizmoDraw(GeneratePositions(arrowValues));
+        GizmoDraw(GenPos());
     }
 
-    private List<Vector2> GeneratePositions(ArrowValues val)
+    private List<Vector2> GenPos() => GeneratePositions(arrowValues, noiseGrid, transform.localEulerAngles.y);
+
+    public static List<Vector2> GeneratePositions(ArrowValues val, List<Vector2> noiseGrid, float angle)
     {
         List<Vector2> positions = new List<Vector2>();
         int centreIndex = val.size.x / 2;
@@ -52,7 +53,7 @@ public class ArrowFormation : BaseFormation
                 pos.y += -Mathf.Abs(x - centreIndex) * val.sharpness; // Arrow shift from centre
                 pos += noiseGrid[x + y * val.size.x] * val.noise; // Noise shift
                 pos -= fullSize * 0.5f; // Shift from centre
-                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -transform.localEulerAngles.y); // Rotate to forward vec
+                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -angle); // Rotate to forward vec
                 positions.Add(pos);
             }
         }

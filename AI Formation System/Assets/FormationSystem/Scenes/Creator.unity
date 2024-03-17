@@ -11982,6 +11982,8 @@ MonoBehaviour:
   _previewObjects: {fileID: 806261643}
   _creatorParent: {fileID: 819079641}
   _formationPrefab: {fileID: 7127694830082134040, guid: bee815295d086bf4e98aca35d9307ee5, type: 3}
+  _unitPrefab: {fileID: 5652320681741433874, guid: 4375d5c7ebe49dd4986e81e9c0187472, type: 3}
+  _previewFloor: {fileID: 1616036138}
 --- !u!1001 &7787972943896491474
 PrefabInstance:
   m_ObjectHideFlags: 0

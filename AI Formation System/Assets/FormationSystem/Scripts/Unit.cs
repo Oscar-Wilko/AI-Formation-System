@@ -30,6 +30,8 @@ public class Unit : MonoBehaviour
                 break;
             case UnitState.Attacking:
                 break;
+            case UnitState.Preview:
+                break;
         }
     }
 
@@ -48,4 +50,6 @@ public class Unit : MonoBehaviour
     public void SetDestination(Vector3 dest) => destination = dest;
 
     public void SetSpeed(float spd) => speed = spd;
+
+    public void SetPreview() => state = UnitState.Preview;
 }

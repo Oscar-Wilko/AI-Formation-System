@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CreatorManager : MonoBehaviour
 {
-    private enum CreatorMode
+    public enum CreatorMode
     {
         Creator,
         Preview
@@ -20,15 +20,56 @@ public class CreatorManager : MonoBehaviour
     [SerializeField] private GameObject _previewObjects;
     [SerializeField] private Transform _creatorParent;
     [SerializeField] private GameObject _formationPrefab;
+    [SerializeField] private GameObject _unitPrefab;
+    [SerializeField] private Transform _previewFloor;
 
-    public void ToggleCreatorMode()
+    public void ToggleCreatorMode(CreatorMode newMode)
     {
-        mode = mode == CreatorMode.Creator ? CreatorMode.Preview : CreatorMode.Creator;
+        mode = newMode;
         if (_dropAreaCreator) _dropAreaCreator.SetActive(mode == CreatorMode.Creator);
         if (_dropAreaPreview) _dropAreaPreview.SetActive(mode == CreatorMode.Preview);
         if (_creatorButton) _creatorButton.SetActive(mode == CreatorMode.Preview);
         if (_previewButton) _previewButton.SetActive(mode == CreatorMode.Creator);
         if (_previewObjects) _previewObjects.SetActive(mode == CreatorMode.Preview);
+
+        if (mode == CreatorMode.Preview) GeneratePreview();
+    }
+
+    public void ToggleCreatorMode() => ToggleCreatorMode(mode == CreatorMode.Creator ? CreatorMode.Preview : CreatorMode.Creator);
+
+    private void GeneratePreview()
+    {
+        for(int i = 0; i < _previewFloor.childCount; i++)
+        {
+            Destroy(_previewFloor.GetChild(i).gameObject);
+        }
+
+        for (int i = 0; i < _creatorParent.childCount; i++)
+        {
+            GameObject obj = _creatorParent.GetChild(i).gameObject;
+            DragFormation drag = obj.GetComponent<DragFormation>();
+            List<Vector2> positions = new List<Vector2>();
+            switch (drag.type)
+            {
+                case FormationType.Box:
+                    positions = BoxFormation.GeneratePositions(drag.boxV, new List<Vector2>(), 0);
+                    break;
+                case FormationType.Arrow:
+                    positions = ArrowFormation.GeneratePositions(drag.arrV, new List<Vector2>(), 0);
+                    break;
+                case FormationType.Triangle:
+                    positions = TriangleFormation.GeneratePositions(drag.triV, new List<Vector2>(), 0);
+                    break;
+            }
+            foreach(Vector2 pos in positions)
+            {
+                GameObject unit = Instantiate(_unitPrefab, _previewFloor);
+                Vector2 recPos = obj.GetComponent<RectTransform>().anchoredPosition;
+                unit.transform.localPosition = new Vector3(pos.x * 0.1f + recPos.x * 0.01f, 0.1f, pos.y * 0.1f + recPos.y * 0.01f);
+                unit.transform.localScale = Vector3.one * 0.1f;
+                unit.GetComponent<Unit>().SetPreview();
+            }
+        }
     }
 
     private void Awake()
