@@ -21,3 +21,9 @@ public enum ValueType
     Int,
     Bool
 }
+
+public enum UnitType
+{
+    Ally,
+    Enemy
+}

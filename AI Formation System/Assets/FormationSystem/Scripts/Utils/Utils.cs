@@ -37,4 +37,35 @@ public static class Utils
         }
         return grid;
     }
+
+    public static GameObject EnemyInRange(float range, Vector3 position, UnitType sourceType)
+    {
+        RaycastHit[] hits = Physics.SphereCastAll(position, range, Vector3.up, 0, LayerMask.GetMask("Unit"));
+        if (hits.Length == 0)
+            return null;
+        float closestDist = Mathf.Infinity;
+        GameObject closestEnemy = null;
+        foreach (RaycastHit hit in hits)
+        {
+            float temp = Vector3.Distance(hit.point, position);
+            if (temp < closestDist && hit.transform.GetComponent<Unit>().Type() != sourceType)
+            {
+                closestDist = temp;
+                closestEnemy = hit.transform.gameObject;
+            }
+        }
+        return closestEnemy;
+    }
+
+    public static int EnemyCountInRange(float range, Vector3 position, UnitType sourceType)
+    {
+        RaycastHit[] hits = Physics.SphereCastAll(position, range, Vector3.up, 0, LayerMask.GetMask("Unit"));
+        if (hits.Length == 0)
+            return 0;
+        int count = 0;
+        foreach (RaycastHit hit in hits)
+            if (hit.transform.GetComponent<Unit>().Type() != sourceType)
+                count++;
+        return count;
+    }
 }

@@ -6,11 +6,14 @@ using UnityEngine.UI;
 
 public class SimulatorManager : MonoBehaviour
 {
+    [Header("Prefabs")]
     [SerializeField] private GameObject _boxPrefab;
     [SerializeField] private GameObject _arrPrefab;
     [SerializeField] private GameObject _triPrefab;
+    [Header("References")]
     [SerializeField] private Transform _formationParent;
     [SerializeField] private Transform _startPosition;
+    [Header("Tweaks")]
     [SerializeField] private float _distSpread;
     [SerializeField] private Vector3 _targetPos;
 
@@ -46,8 +49,14 @@ public class SimulatorManager : MonoBehaviour
             Debug.LogWarning("False save reference detected, stopping load of formation.");
             return;
         }
+
+        GameObject curLeader = null;
+        float distFromTarget = float.MaxValue;
+        List<BaseFormation> formations = new List<BaseFormation>();
+        // Go through each formation stored in formation logs
         foreach (FormationLog log in info.logs)
         {
+            // Instantiate formation based on type
             GameObject obj;
             switch (log.type)
             {
@@ -57,18 +66,40 @@ public class SimulatorManager : MonoBehaviour
                 default: continue;
             }
             obj.transform.SetParent(_formationParent);
+
+            // Set its position
             Vector2 shiftPos = Utils.Rotate(log.position, Mathf.Deg2Rad * -_startPosition.localEulerAngles.y);
             Vector3 pos = _startPosition.position;
             pos += new Vector3(shiftPos.x, 0, shiftPos.y) * _distSpread;
             pos.y = Utils.RayDown(new Vector2(pos.x, pos.z));
             obj.transform.position = pos;
+
+            // Update formation values
             switch (log.type)
             {
                 case FormationType.Box: obj.GetComponent<BoxFormation>().boxValues = log.boxValues; break;
                 case FormationType.Arrow: obj.GetComponent<ArrowFormation>().arrowValues = log.arrowValues; break;
                 case FormationType.Triangle: obj.GetComponent<TriangleFormation>().triangleValues = log.triangleValues; break;
             }
-            obj.GetComponent<BaseFormation>().target = _targetPos;
+
+            // Log the closest formation to the target
+            obj.GetComponent<BaseFormation>().endTarget = _targetPos;
+            float temp = Vector3.Distance(pos, _targetPos);
+            if (temp < distFromTarget)
+            {
+                distFromTarget = temp;
+                curLeader = obj;
+            }
+            formations.Add(obj.GetComponent<BaseFormation>());
+        }
+        // State who's the leader
+        curLeader.GetComponent<BaseFormation>().isLeader = true;
+        foreach(BaseFormation formation in formations)
+        {
+            if (formation.transform != curLeader.transform)
+            {
+                formation.followTarget = curLeader;
+            }
         }
     }
 }

@@ -29,15 +29,35 @@ public class BoxFormation : BaseFormation
         GizmoDraw(GenPos());
     }
 
-    private List<Vector2> GenPos() => GeneratePositions(boxValues, noiseGrid, transform.localEulerAngles.y);
+    private List<Vector2> GenPos() => GeneratePositions(boxValues, transform.localEulerAngles.y);
 
-    public static List<Vector2> GeneratePositions(BoxValues val, List<Vector2> noiseGrid, float angle)
+    /// <summary>
+    /// Generate positions based on box values with own noise grid
+    /// </summary>
+    /// <param name="val">BoxValues of formation</param>
+    /// <param name="angle">float of angle to direct by</param>
+    /// <returns>List of Vector2 positions</returns>
+    private List<Vector2> GeneratePositions(BoxValues val, float angle)
+    {
+        if (val.refreshNoise || noiseGrid.Count == 0 || noiseGrid.Count != val.size.x * val.size.y)
+            noiseGrid = Utils.NoiseArray(val.size.x * val.size.y);
+        val.refreshNoise = false;
+        return GeneratePositions(val, noiseGrid, angle, 90);
+    }
+
+    /// <summary>
+    /// Generate positions based on box values
+    /// </summary>
+    /// <param name="val">BoxValues of formation</param>
+    /// <param name="noiseGrid">List of Vector2 positions of noise shift</param>
+    /// <param name="angle">float of angle to direct by</param>
+    /// <returns>List of Vector2 positions</returns>
+    public static List<Vector2> GeneratePositions(BoxValues val, List<Vector2> noiseGrid, float angle, float anglePreference)
     {
         List<Vector2> positions = new List<Vector2>();
         Vector2 fullSize = new Vector2(val.nthShift * val.size.y + val.spacing.x * val.size.x, val.spacing.y * val.size.y);
         if (val.refreshNoise || noiseGrid.Count == 0 || noiseGrid.Count != val.size.x*val.size.y)
             noiseGrid = Utils.NoiseArray(val.size.x * val.size.y);
-        val.refreshNoise = false;
 
         for(int x = 0; x < val.size.x; x++)
         {
@@ -51,7 +71,7 @@ public class BoxFormation : BaseFormation
                 pos.y += val.spacing.y * y;     // Y spacing
                 pos += noiseGrid[x + y * val.size.x] * val.noise; // Noise shift
                 pos -= fullSize * 0.5f;         // Shift from centre
-                pos = Utils.Rotate(pos, Mathf.Deg2Rad * - angle); // Rotate to forward vec
+                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -(anglePreference + (angle - anglePreference) * 0.5f)); // Rotate to forward vec
                 positions.Add(pos);
             }
         }

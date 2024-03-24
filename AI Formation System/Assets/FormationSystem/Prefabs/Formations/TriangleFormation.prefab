@@ -14,7 +14,7 @@ GameObject:
   m_Layer: 0
   m_Name: TriangleFormation
   m_TagString: Untagged
-  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -47,7 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 5652320681741433874, guid: 4375d5c7ebe49dd4986e81e9c0187472, type: 3}
   stepSpeed: 10
-  target: {x: 0, y: 0, z: 0}
+  endTarget: {x: 0, y: 0, z: 0}
+  followTarget: {fileID: 0}
+  isLeader: 0
   triangleValues:
     noise: 0
     spacing: {x: 5, y: 5}
@@ -64,18 +66,18 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9115410434652225888}
-  m_Enabled: 1
-  m_AgentTypeID: -334000983
-  m_Radius: 10
-  m_Speed: 10
+  m_Enabled: 0
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 8
   m_Acceleration: 4
   avoidancePriority: 50
-  m_AngularSpeed: 30
+  m_AngularSpeed: 5
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 3
+  m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 1
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0

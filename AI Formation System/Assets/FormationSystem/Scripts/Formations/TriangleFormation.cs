@@ -29,14 +29,34 @@ public class TriangleFormation : BaseFormation
         GizmoDraw(GenPos());
     }
 
-    private List<Vector2> GenPos() => GeneratePositions(triangleValues, noiseGrid, transform.localEulerAngles.y);
+    private List<Vector2> GenPos() => GeneratePositions(triangleValues, transform.localEulerAngles.y);
 
-    public static List<Vector2> GeneratePositions(TriangleValues val, List<Vector2> noiseGrid, float angle)
+    /// <summary>
+    /// Generate positions based on triangle values with own noise
+    /// </summary>
+    /// <param name="val">TriangleValues of formation</param>
+    /// <param name="angle">float of angle to direct by</param>
+    /// <returns>List of Vector2 positions</returns>
+    private List<Vector2> GeneratePositions(TriangleValues val, float angle)
+    {
+        if (val.refreshNoise || noiseGrid.Count == 0 || noiseGrid.Count != TriangleCount(val))
+            noiseGrid = Utils.NoiseArray(TriangleCount(val));
+        val.refreshNoise = false;
+        return GeneratePositions(val, noiseGrid, angle, 90);
+    }
+
+    /// <summary>
+    /// Generate positions based on triangle values
+    /// </summary>
+    /// <param name="val">TriangleValues of formation</param>
+    /// <param name="noiseGrid">List of Vector2 positions of noise shift</param>
+    /// <param name="angle">float of angle to direct by</param>
+    /// <returns>List of Vector2 positions</returns>
+    public static List<Vector2> GeneratePositions(TriangleValues val, List<Vector2> noiseGrid, float angle, float anglePreference)
     {
         List<Vector2> positions = new List<Vector2>();
         if (val.refreshNoise || noiseGrid.Count == 0 || noiseGrid.Count != TriangleCount(val))
             noiseGrid = Utils.NoiseArray(TriangleCount(val));
-        val.refreshNoise = false;
         int index = 0;
 
         for(int r = 0; r < val.rows; r ++)
@@ -52,7 +72,7 @@ public class TriangleFormation : BaseFormation
                 pos.y -= val.spacing.y * r; // Y spacing
                 pos += noiseGrid[index] * val.noise; // Noise shift
                 pos.y += val.spacing.y * (val.rows - 1) * 0.5f; // Shift from centre
-                pos = Utils.Rotate(pos, Mathf.Deg2Rad * - angle); // Rotate to forward vec
+                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -(anglePreference + (angle - anglePreference) * 0.5f)); // Rotate to forward vec
                 positions.Add(pos);
                 index++;
             }
@@ -61,6 +81,11 @@ public class TriangleFormation : BaseFormation
         return positions;
     }
 
+    /// <summary>
+    /// Get number of units based on triangle values
+    /// </summary>
+    /// <param name="val">TriangleValues of variables</param>
+    /// <returns>Int of unit count</returns>
     private static int TriangleCount(TriangleValues val)
     {
         int count = 0;

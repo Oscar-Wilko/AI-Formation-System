@@ -52,13 +52,13 @@ public class CreatorManager : MonoBehaviour
             switch (drag.type)
             {
                 case FormationType.Box:
-                    positions = BoxFormation.GeneratePositions(drag.boxV, new List<Vector2>(), 0);
+                    positions = BoxFormation.GeneratePositions(drag.boxV, new List<Vector2>(), 0, 0);
                     break;
                 case FormationType.Arrow:
-                    positions = ArrowFormation.GeneratePositions(drag.arrV, new List<Vector2>(), 0);
+                    positions = ArrowFormation.GeneratePositions(drag.arrV, new List<Vector2>(), 0, 0);
                     break;
                 case FormationType.Triangle:
-                    positions = TriangleFormation.GeneratePositions(drag.triV, new List<Vector2>(), 0);
+                    positions = TriangleFormation.GeneratePositions(drag.triV, new List<Vector2>(), 0, 0);
                     break;
             }
             foreach(Vector2 pos in positions)
