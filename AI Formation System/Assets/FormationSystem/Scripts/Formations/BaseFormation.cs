@@ -9,18 +9,20 @@ public class BaseFormation : MonoBehaviour
     [Header("Trackers")]
     public Vector3 endTarget;
     public bool isLeader;
+    protected bool inBattle = false;
+    protected List<Vector2> noiseGrid = new List<Vector2>();
+    protected List<GameObject> units = new List<GameObject>();
+    protected List<BaseFormation> otherFormations = new List<BaseFormation>();
+    protected List<BaseFormation> formationsInFight = new List<BaseFormation>();
+    protected BaseFormation formationAssisting;
     [Header("References")]
+    protected NavMeshAgent agent;
     public GameObject followTarget;
     [SerializeField] protected GameObject unitPrefab;
     [Header("Tweaks")]
     [SerializeField] protected float stepSpeed;
     protected float agentRadius;
     protected Vector3 followShift;
-    protected NavMeshAgent agent;
-    protected List<Vector2> noiseGrid = new List<Vector2>();
-    protected List<GameObject> units = new List<GameObject>();
-    protected List<BaseFormation> otherFormations = new List<BaseFormation>();
-    protected List<BaseFormation> formationsInFight = new List<BaseFormation>();
 
     virtual protected void Start()
     {
@@ -40,6 +42,7 @@ public class BaseFormation : MonoBehaviour
 
     virtual protected void Update()
     {
+        UnitUpdate();
         MoveUpdate();
     }
 
@@ -48,13 +51,65 @@ public class BaseFormation : MonoBehaviour
         
     }
 
+    protected void UnitUpdate()
+    {
+        // Check if all units from formation have died
+        if (TroopCount() == 0)
+            NoUnits();
+    }
+
+    /// <summary>
+    /// Update all formations that this formation will cease to exist and refresh leader if needed
+    /// </summary>
+    protected void NoUnits()
+    {
+        // Get closest formation to the end
+        float dist = float.MaxValue;
+        BaseFormation nextInLine = null;
+        foreach (BaseFormation formation in otherFormations)
+        {
+            // Whilst refreshing their lists
+            formation.FormationLost(this);
+            if (isLeader)
+            {
+                float temp = Vector3.Distance(formation.transform.position, endTarget);
+                if (temp < dist)
+                {
+                    dist = temp;
+                    nextInLine = formation;
+                }
+            }
+        }
+        // Update the new leader if there are any formations left, and if this was a leader
+        if (isLeader && nextInLine)
+        {
+            nextInLine.isLeader = true;
+            foreach (BaseFormation formation in otherFormations)
+            {
+                if (formation.transform != nextInLine.transform)
+                {
+                    formation.followTarget = nextInLine.gameObject;
+                    formation.followShift -= nextInLine.followShift;
+                }
+            }
+        }
+        Destroy(gameObject);
+    }
+
     /// <summary>
     /// Update formation based off environment and other formations
     /// </summary>
     protected void MoveUpdate()
     {
+        if (!agent.isOnNavMesh)
+            return;
+        if (formationAssisting)
+        {
+            MoveToTarget(formationAssisting.transform.position, 1);
+            return;
+        }
         // Get average position of battle
-        Vector3 averagePos = Vector3.zero;
+        Vector3 averagePos = new Vector3(1,0,0);
         int unitCount = 0;
         foreach(GameObject unit in units)
         {
@@ -70,27 +125,27 @@ public class BaseFormation : MonoBehaviour
         // If in battle, go to average position
         if (unitCount != 0)
         {
+            inBattle = true;
             averagePos = averagePos / unitCount;
             averagePos.y = Utils.RayDown(new Vector2(averagePos.x, averagePos.z));
             MoveToTarget(averagePos, 1);
 
             // Get enemy count, and ally count
-            int enemyDetectCount = Utils.EnemyCountInRange(12, transform.position, UnitType.Ally);
-            int battleCount = TroopCount();
-            foreach(BaseFormation formation in formationsInFight)
-            {
-                battleCount += formation.TroopCount();
-            }
-            
+            int enemyDetectCount = Utils.EnemyCountInRange(20, transform.position, UnitType.Ally);
+
             // If overpowered, request backup
-            if (enemyDetectCount > battleCount)
+            if (enemyDetectCount *1.5f > FightCount())
             {
                 RequestBackup();
             }
+            return;
         }
         // Otherwise, if leader
-        else if (isLeader)
+        if (inBattle && !formationAssisting)
+            EndFight();
+        if (isLeader)
         {
+            inBattle = false;
             // Halt if other formations are slacking behind
             bool shouldStop = false;
             foreach (BaseFormation formation in otherFormations)
@@ -104,23 +159,94 @@ public class BaseFormation : MonoBehaviour
             {
                 MoveToTarget(endTarget, 2);
             }
+            return;
         }
         // Otherwise, if non-leader
+        inBattle = false;
+        // Move to offset from leader
+        MoveToTarget(followTarget.transform.position - followShift, 4);
+    }
+
+    /// <summary>
+    /// Request another formation to join the fight
+    /// </summary>
+    protected void RequestBackup()
+    {
+        // Get closest formation to self that isn't in a battle
+        BaseFormation newGroup = null;
+        float dist = float.MaxValue;
+        foreach(BaseFormation formation in otherFormations)
+        {
+            if (formation.TroopCount() == 0 || formation.InBattle())
+                continue;
+            float temp = Vector3.Distance(endTarget, formation.transform.position);
+            if (temp < dist)
+            {
+                newGroup = formation;
+                dist = temp;
+            }
+        }
+        if (!newGroup)
+            return;
+        // If already assisting a fight, tell the fight innitiator about the new member
+        if (formationAssisting)
+        {
+            formationAssisting.EnterFight(newGroup);
+        }
+        // Otherwise add to self
         else
         {
-            // Move to offset from leader
-            MoveToTarget(followTarget.transform.position - followShift, 4);
+            EnterFight(newGroup);
         }
     }
 
-    protected void RequestBackup()
+    /// <summary>
+    /// Inform that a new formation has entered the current fight
+    /// </summary>
+    /// <param name="formation">BaseFormation joining formation</param>
+    public void EnterFight(BaseFormation formation)
     {
-
+        formation.formationAssisting = this;
+        formationsInFight.Add(formation);
     }
 
-    public void RetractedFromFight(BaseFormation formation)
+    /// <summary>
+    /// Inform that the fight ended to all formations involved
+    /// </summary>
+    public void EndFight()
     {
+        foreach (BaseFormation formation in formationsInFight)
+        {
+            formation.formationAssisting = null;
+        }
+    }
+
+    /// <summary>
+    /// Inform that a formation has left the fight
+    /// </summary>
+    /// <param name="formation">BaseFormation of leaving formation</param>
+    public void FormationLost(BaseFormation formation)
+    {
+        otherFormations.Remove(formation);
         formationsInFight.Remove(formation);
+        if (formation == formationAssisting)
+            formationAssisting = null;
+    }
+
+    /// <summary>
+    /// Get total unit count of formations in same battle as this
+    /// </summary>
+    /// <returns>int of total units from all fighting formations</returns>
+    public int FightCount()
+    {
+        if (formationAssisting)
+            return formationAssisting.FightCount();
+        int battleCount = TroopCount();
+        foreach (BaseFormation formation in formationsInFight)
+        {
+            battleCount += formation.TroopCount();
+        }
+        return battleCount;
     }
 
     /// <summary>
@@ -130,6 +256,8 @@ public class BaseFormation : MonoBehaviour
     /// <param name="ignoreDist">float of minimum dist threshold</param>
     protected void MoveToTarget(Vector3 pos, float ignoreDist)
     {
+        if (!agent.isOnNavMesh)
+            return;
         agent.isStopped = false;
         pos.y = Utils.RayDown(new Vector2(pos.x, pos.z));
         if (agent.enabled && Vector3.Distance(pos, transform.position) >= ignoreDist)
@@ -148,6 +276,8 @@ public class BaseFormation : MonoBehaviour
             Gizmos.DrawWireCube(new Vector3(transform.position.x + pos.x, y_pos + 1, transform.position.z + pos.y), new Vector3(1, 2, 1));
         }
     }
+
+    public virtual void LoseUnit(GameObject unit) { }
 
     /// <summary>
     /// Update all units to relocate their destination to a paired position list
@@ -186,6 +316,7 @@ public class BaseFormation : MonoBehaviour
             float y_pos = Utils.RayDown(new Vector2(transform.position.x, transform.position.z) + pos);
             GameObject unit = Instantiate(unitPrefab, new Vector3(transform.position.x + pos.x, y_pos + 1, transform.position.z + pos.y), Quaternion.identity, boxParent);
             unit.GetComponent<Unit>().SetSpeed(stepSpeed);
+            unit.GetComponent<Unit>().SetFormation(this);
             units.Add(unit);
         }
         return units;
@@ -235,8 +366,6 @@ public class BaseFormation : MonoBehaviour
         }
     }
 
-    public float PathDistance() => agent.remainingDistance;
-    
     /// <summary>
     /// Get number of alive units
     /// </summary>
@@ -249,4 +378,6 @@ public class BaseFormation : MonoBehaviour
                 count++;
         return count;
     }
+    public float PathDistance() => agent.remainingDistance;
+    public bool InBattle() => inBattle;
 }

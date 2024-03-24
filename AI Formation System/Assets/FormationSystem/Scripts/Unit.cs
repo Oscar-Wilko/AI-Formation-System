@@ -22,6 +22,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private float maxHp;
     private float hp;
     private float tracker = 0;
+    private BaseFormation formation;
 
     private void Awake()
     {
@@ -34,6 +35,8 @@ public class Unit : MonoBehaviour
     private void Update()
     {
         StateCheck();
+        if (Input.GetKeyDown(KeyCode.K) && Random.Range(0, 100) < 10)
+            TakeDamage(5);
     }
 
     private void StateCheck()
@@ -137,7 +140,11 @@ public class Unit : MonoBehaviour
     {
         hp -= dmg;
         if (hp <= 0)
+        {
+            if (formation)
+                formation.LoseUnit(gameObject);
             Destroy(gameObject);
+        }
     }
 
     private GameObject EnemyInRange(float range) => Utils.EnemyInRange(range, transform.position, type);
@@ -147,4 +154,5 @@ public class Unit : MonoBehaviour
     public void SetPreview() => state = UnitState.Preview;
     public UnitType Type() => type;
     public UnitState State() => state;
+    public void SetFormation(BaseFormation form) => formation = form;
 }

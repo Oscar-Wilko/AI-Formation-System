@@ -24,6 +24,20 @@ public class TriangleFormation : BaseFormation
         base.LateUpdate();
     }
 
+    public override void LoseUnit(GameObject unit)
+    {
+        int index = units.IndexOf(unit);
+        int row = RowOfIndex(index, triangleValues);
+        int prevIndex = index;
+        while (index + (triangleValues.incPerRow * row + 1) < units.Count)
+        {
+            index += triangleValues.incPerRow * row + 1;
+            units[prevIndex] = units[index];
+            prevIndex = index;
+        }
+        base.LoseUnit(unit);
+    }
+
     private void OnDrawGizmos()
     {
         GizmoDraw(GenPos());
@@ -92,5 +106,17 @@ public class TriangleFormation : BaseFormation
         for(int i = 0; i < val.rows; i ++)
             count += i * val.incPerRow + 1;
         return count;
+    }
+
+    private static int RowOfIndex(int index, TriangleValues val)
+    {
+        int count = 0;
+        for (int i = 0; i < val.rows; i++)
+        {
+            if (index <= count)
+                return i;
+            count += i * val.incPerRow + 1;
+        }
+        return val.rows;
     }
 }

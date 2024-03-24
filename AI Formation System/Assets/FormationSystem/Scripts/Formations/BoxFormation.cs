@@ -24,6 +24,17 @@ public class BoxFormation : BaseFormation
         base.LateUpdate();
     }
 
+    public override void LoseUnit(GameObject unit)
+    {
+        int index = units.IndexOf(unit);
+        while (index + boxValues.size.x < units.Count)
+        {
+            index += boxValues.size.x;
+            units[index - boxValues.size.x] = units[index];
+        }
+        base.LoseUnit(unit);
+    }
+
     private void OnDrawGizmos()
     {
         GizmoDraw(GenPos());

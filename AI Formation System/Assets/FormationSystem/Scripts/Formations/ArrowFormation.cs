@@ -24,6 +24,17 @@ public class ArrowFormation : BaseFormation
         base.LateUpdate();
     }
 
+    public override void LoseUnit(GameObject unit)
+    {
+        int index = units.IndexOf(unit);
+        while (index + arrowValues.size.x < units.Count)
+        {
+            index += arrowValues.size.x;
+            units[index - arrowValues.size.x] = units[index];
+        }
+        base.LoseUnit(unit);
+    }
+
     private void OnDrawGizmos()
     {
         GizmoDraw(GenPos());
