@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89b99b6b93ff284fb04f00f203b70d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  endTarget: {x: 0, y: 0, z: 0}
+  isLeader: 0
+  followTarget: {fileID: 0}
   unitPrefab: {fileID: 5652320681741433874, guid: 4375d5c7ebe49dd4986e81e9c0187472, type: 3}
   stepSpeed: 10
-  endTarget: {x: 0, y: 0, z: 0}
-  followTarget: {fileID: 0}
-  isLeader: 0
   triangleValues:
     noise: 0
     spacing: {x: 5, y: 5}

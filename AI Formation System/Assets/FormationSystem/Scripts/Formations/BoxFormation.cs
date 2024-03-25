@@ -82,7 +82,7 @@ public class BoxFormation : BaseFormation
                 pos.y += val.spacing.y * y;     // Y spacing
                 pos += noiseGrid[x + y * val.size.x] * val.noise; // Noise shift
                 pos -= fullSize * 0.5f;         // Shift from centre
-                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -(anglePreference + (angle - anglePreference) * 0.5f)); // Rotate to forward vec
+                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -(anglePreference + (angle - anglePreference) * 0.25f)); // Rotate to forward vec
                 positions.Add(pos);
             }
         }

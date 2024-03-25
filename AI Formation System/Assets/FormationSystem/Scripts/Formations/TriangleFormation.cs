@@ -86,7 +86,7 @@ public class TriangleFormation : BaseFormation
                 pos.y -= val.spacing.y * r; // Y spacing
                 pos += noiseGrid[index] * val.noise; // Noise shift
                 pos.y += val.spacing.y * (val.rows - 1) * 0.5f; // Shift from centre
-                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -(anglePreference + (angle - anglePreference) * 0.5f)); // Rotate to forward vec
+                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -(anglePreference + (angle - anglePreference) * 0.25f)); // Rotate to forward vec
                 positions.Add(pos);
                 index++;
             }

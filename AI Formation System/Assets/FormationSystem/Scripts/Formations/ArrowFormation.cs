@@ -27,10 +27,11 @@ public class ArrowFormation : BaseFormation
     public override void LoseUnit(GameObject unit)
     {
         int index = units.IndexOf(unit);
-        while (index + arrowValues.size.x < units.Count)
+        while (index + 1 < units.Count)
         {
-            index += arrowValues.size.x;
-            units[index - arrowValues.size.x] = units[index];
+            index++;
+            // YOU'RE AN IDIOT JUST DO X ++ or X -- AND CHECK IF IT'S ON THE END OR NOT
+            units[index - 1] = units[index];
         }
         base.LoseUnit(unit);
     }
@@ -84,7 +85,7 @@ public class ArrowFormation : BaseFormation
                 pos.y += -Mathf.Abs(x - centreIndex) * val.sharpness; // Arrow shift from centre
                 pos += noiseGrid[x + y * val.size.x] * val.noise; // Noise shift
                 pos -= fullSize * 0.5f; // Shift from centre
-                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -(anglePreference + (angle - anglePreference) * 0.5f)); // Rotate to forward vec
+                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -(anglePreference + (angle - anglePreference) * 0.25f)); // Rotate to forward vec
                 positions.Add(pos);
             }
         }
