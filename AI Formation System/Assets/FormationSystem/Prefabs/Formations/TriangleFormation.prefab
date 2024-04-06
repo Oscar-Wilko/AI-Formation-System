@@ -47,8 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endTarget: {x: 0, y: 0, z: 0}
   isLeader: 0
+  units: []
   followTarget: {fileID: 0}
   unitPrefab: {fileID: 5652320681741433874, guid: 4375d5c7ebe49dd4986e81e9c0187472, type: 3}
+  unitType: 0
   stepSpeed: 10
   triangleValues:
     noise: 0
@@ -58,6 +60,7 @@ MonoBehaviour:
     rows: 5
     incPerRow: 2
     hollow: 0
+    supplier: 0
     refreshNoise: 0
 --- !u!195 &8292823146862147737
 NavMeshAgent:

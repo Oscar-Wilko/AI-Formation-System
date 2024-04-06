@@ -5,21 +5,31 @@ using UnityEngine.AI;
 
 public class Unit : MonoBehaviour
 {
-    [SerializeField] private UnitType type;
-    private UnitState state = UnitState.Formation;
+    [Header("References")]
     private Vector3 destination;
     private MeshRenderer mesh;
+    private NavMeshAgent agent;
+    [Header("Ally Materials")]
     [SerializeField] private Material formationMat;
     [SerializeField] private Material standbyMat;
     [SerializeField] private Material detectedMat;
     [SerializeField] private Material attackingMat;
     [SerializeField] private Material previewMat;
-    private NavMeshAgent agent;
+    [Header("Enemy Materials")]
+    [SerializeField] private Material formationMatEnemy;
+    [SerializeField] private Material standbyMatEnemy;
+    [SerializeField] private Material detectedMatEnemy;
+    [SerializeField] private Material attackingMatEnemy;
+    [SerializeField] private Material previewMatEnemy;
+    [Header("Tweak Values")]
+    [SerializeField] private UnitType type;
     [SerializeField] private float detectRange;
     [SerializeField] private float attackRange;
     [SerializeField] private float attackRate;
     [SerializeField] private float damage;
     [SerializeField] private float maxHp;
+    [Header("Trackers")]
+    private UnitState state = UnitState.Formation;
     private float hp;
     private float tracker = 0;
     private BaseFormation formation;
@@ -31,6 +41,7 @@ public class Unit : MonoBehaviour
         destination = transform.position;
         agent = GetComponent<NavMeshAgent>();
         mesh = GetComponent<MeshRenderer>();
+        ChangeState(UnitState.Formation);
     }
 
     private void Update()
@@ -52,46 +63,38 @@ public class Unit : MonoBehaviour
                 // IN DETECT RANGE
                 if (EnemyInRange(detectRange))
                 {
-                    state = UnitState.Detected;
-                    mesh.material = detectedMat;
+                    ChangeState(UnitState.Detected);
                     break;
                 }
                 // REACHED DESTINATION
                 if (Vector2.Distance(new Vector2(destination.x, destination.z), new Vector2(transform.position.x, transform.position.z)) <= 0.2f)
                 {
-                    state = UnitState.Standby;
-                    mesh.material = standbyMat;
+                    ChangeState(UnitState.Standby);
                     break;
                 }
                 // OUT OF DETECT RANGE
                 Move(destination);
-                mesh.material = formationMat;
                 break;
             case UnitState.Standby:
                 // IN DETECT RANGE
                 if (EnemyInRange(detectRange))
                 {
-                    state = UnitState.Detected;
-                    mesh.material = detectedMat;
+                    ChangeState(UnitState.Detected);
                     break;
                 }
                 // DESTINATION IS FAR AWAY
                 if (Vector2.Distance(new Vector2(destination.x, destination.z), new Vector2(transform.position.x, transform.position.z)) > 0.2f)
                 {
-                    state = UnitState.Formation;
-                    mesh.material = formationMat;
+                    ChangeState(UnitState.Formation);
                     break;
                 }
-                // OUT OF DETECT RANGE
-                mesh.material = standbyMat;
                 break;
             case UnitState.Detected:
                 // WITHIN ATTACK RANGE
                 enemy = EnemyInRange(attackRange);
                 if (enemy)
                 {
-                    state = UnitState.Attacking;
-                    mesh.material = attackingMat;
+                    ChangeState(UnitState.Attacking);
                     break;
                 }
                 // STILL IN DETECT RANGE
@@ -102,8 +105,7 @@ public class Unit : MonoBehaviour
                     break;
                 }
                 // OUT OF DETECT RANGE
-                state = UnitState.Formation;
-                mesh.material = formationMat;
+                ChangeState(UnitState.Formation);
                 break;
             case UnitState.Attacking:
                 // IN ATTACK RANGE
@@ -123,16 +125,37 @@ public class Unit : MonoBehaviour
                 enemy = EnemyInRange(detectRange);
                 if (enemy)
                 {
-                    state = UnitState.Detected;
-                    mesh.material = detectedMat;
+                    ChangeState(UnitState.Detected);
                     break;
                 }
                 // OUT OF DETECT RANGE
-                state = UnitState.Formation;
-                mesh.material = formationMat;
+                ChangeState(UnitState.Formation);
                 break;
             case UnitState.Preview:
-                mesh.material = previewMat;
+                ChangeState(UnitState.Preview);
+                break;
+        }
+    }
+
+    private void ChangeState(UnitState new_state)
+    {
+        state = new_state;
+        switch (state)
+        {
+            case UnitState.Formation:
+                mesh.material = type == UnitType.Ally ? formationMat : formationMatEnemy;
+                break;
+            case UnitState.Standby:
+                mesh.material = type == UnitType.Ally ? standbyMat : standbyMatEnemy;
+                break;
+            case UnitState.Detected:
+                mesh.material = type == UnitType.Ally ? detectedMat : detectedMatEnemy;
+                break;
+            case UnitState.Attacking:
+                mesh.material = type == UnitType.Ally ? attackingMat : attackingMatEnemy;
+                break;
+            case UnitState.Preview:
+                mesh.material = type == UnitType.Ally ? previewMat : previewMatEnemy;
                 break;
         }
     }
@@ -143,7 +166,7 @@ public class Unit : MonoBehaviour
         if (hp <= 0 && !dead)
         {
             if (formation)
-                formation.LoseUnit(gameObject);
+                formation.LoseUnit(gameObject, true);
             dead = true;
             Destroy(gameObject);
         }
@@ -156,5 +179,6 @@ public class Unit : MonoBehaviour
     public void SetPreview() => state = UnitState.Preview;
     public UnitType Type() => type;
     public UnitState State() => state;
+    public void SetType(UnitType n_type) => type = n_type;
     public void SetFormation(BaseFormation form) => formation = form;
 }

@@ -24,18 +24,47 @@ public class TriangleFormation : BaseFormation
         base.LateUpdate();
     }
 
-    public override void LoseUnit(GameObject unit)
+    public override bool CanSendSupply() => triangleValues.supplier;
+
+    public override void LoseUnit(GameObject unit, bool request_replacement)
     {
         int index = units.IndexOf(unit);
         int row = RowOfIndex(index, triangleValues);
         int prevIndex = index;
-        while (index + (triangleValues.incPerRow * row + 1) < units.Count)
+        Vector3 prevPos = units[prevIndex].transform.position;
+        for (int i = row; i < triangleValues.rows - 1; i ++)
         {
-            index += triangleValues.incPerRow * row + 1;
-            units[prevIndex] = units[index];
-            prevIndex = index;
+            int tempIndex = 0;
+            for(int r = 0; r <= i; r++)
+            {
+                tempIndex += r * triangleValues.incPerRow + 1;
+            }
+            int closestShift = -1;
+            float closestDist = float.MaxValue;
+            for(int a = 0; a < (i+1) * triangleValues.incPerRow; a ++)
+            {
+                if (!units[tempIndex + a])
+                    continue;
+                float dist = Vector3.Distance(prevPos, units[tempIndex + a].transform.position);
+                if (dist < closestDist)
+                {
+                    closestDist = dist;
+                    closestShift = a;
+                }
+            }
+            if (closestShift == -1)
+                break;
+            tempIndex += closestShift;
+            units[prevIndex] = units[tempIndex];
+            prevPos = units[tempIndex].transform.position;
+            prevIndex = tempIndex;
+            if (units[tempIndex])
+                index = tempIndex;
+            units[tempIndex] = null;
         }
-        base.LoseUnit(unit);
+        if (request_replacement && !triangleValues.supplier)
+            RequestSupply(index);
+        base.LoseUnit(unit, request_replacement);
     }
 
     private void OnDrawGizmos()
@@ -56,7 +85,7 @@ public class TriangleFormation : BaseFormation
         if (val.refreshNoise || noiseGrid.Count == 0 || noiseGrid.Count != TriangleCount(val))
             noiseGrid = Utils.NoiseArray(TriangleCount(val));
         val.refreshNoise = false;
-        return GeneratePositions(val, noiseGrid, angle, 90);
+        return GeneratePositions(val, noiseGrid, angle, unitType == UnitType.Ally ? 90 : -90);
     }
 
     /// <summary>
@@ -86,7 +115,10 @@ public class TriangleFormation : BaseFormation
                 pos.y -= val.spacing.y * r; // Y spacing
                 pos += noiseGrid[index] * val.noise; // Noise shift
                 pos.y += val.spacing.y * (val.rows - 1) * 0.5f; // Shift from centre
-                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -(anglePreference + (angle - anglePreference) * 0.25f)); // Rotate to forward vec
+                float angleShift = angle - anglePreference;
+                while (angleShift > 180)
+                    angleShift -= 360;
+                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -(anglePreference + (angleShift) * 0.25f)); // Rotate to forward vec
                 positions.Add(pos);
                 index++;
             }
@@ -113,9 +145,9 @@ public class TriangleFormation : BaseFormation
         int count = 0;
         for (int i = 0; i < val.rows; i++)
         {
-            if (index <= count)
-                return i;
             count += i * val.incPerRow + 1;
+            if (index < count)
+                return i;
         }
         return val.rows;
     }

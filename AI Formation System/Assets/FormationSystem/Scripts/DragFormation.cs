@@ -40,7 +40,7 @@ public class DragFormation : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
     {
         foreach(FormationEditor editor in FindObjectsOfType<FormationEditor>(includeInactive: true))
         {
-            editor.gameObject.SetActive(editor.type == type);
+            editor.ToggleState(editor.type == type);
             if (editor.type == type)
             {
                 editor.Init(this);

@@ -10,6 +10,7 @@ public struct BoxValues
     [SerializeField] public float evenShift;
     [SerializeField] public Vector2Int size;
     [SerializeField] public bool hollow;
+    [SerializeField] public bool supplier;
     [SerializeField] public bool refreshNoise;
 }
 
@@ -23,6 +24,7 @@ public struct ArrowValues
     [SerializeField] public float evenShift;
     [SerializeField] public Vector2Int size;
     [SerializeField] public bool hollow;
+    [SerializeField] public bool supplier;
     [SerializeField] public bool refreshNoise;
 }
 
@@ -36,6 +38,7 @@ public struct TriangleValues
     [SerializeField] public int rows;
     [SerializeField] public int incPerRow;
     [SerializeField] public bool hollow;
+    [SerializeField] public bool supplier;
     [SerializeField] public bool refreshNoise;
 }
 

@@ -27,3 +27,10 @@ public enum UnitType
     Ally,
     Enemy
 }
+
+public enum FightState
+{
+    Attack,
+    Hold,
+    Flank
+}

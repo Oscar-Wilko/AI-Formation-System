@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "type": 2,
+            "type": 1,
             "position": {
-                "x": -118.952880859375,
-                "y": 196.57940673828126
+                "x": 3.89691162109375,
+                "y": 190.3917236328125
             },
             "boxValues": {
                 "noise": 0.0,
@@ -19,57 +19,61 @@
                     "y": 0
                 },
                 "hollow": false,
+                "supplier": false,
                 "refreshNoise": false
             },
             "arrowValues": {
                 "noise": 0.0,
                 "spacing": {
-                    "x": 0.0,
-                    "y": 0.0
+                    "x": 1.2699999809265137,
+                    "y": 2.3499999046325685
                 },
-                "sharpness": 0.0,
+                "sharpness": 1.0,
                 "nthShift": 0.0,
                 "evenShift": 0.0,
                 "size": {
-                    "x": 0,
-                    "y": 0
+                    "x": 10,
+                    "y": 4
                 },
                 "hollow": false,
+                "supplier": false,
                 "refreshNoise": false
             },
             "triangleValues": {
                 "noise": 0.0,
                 "spacing": {
-                    "x": 1.0,
-                    "y": 1.0
+                    "x": 0.0,
+                    "y": 0.0
                 },
                 "nthShift": 0.0,
                 "evenShift": 0.0,
-                "rows": 1,
-                "incPerRow": 1,
+                "rows": 0,
+                "incPerRow": 0,
                 "hollow": false,
+                "supplier": false,
                 "refreshNoise": false
             }
         },
         {
-            "type": 2,
+            "type": 0,
             "position": {
-                "x": 69.8079833984375,
-                "y": 93.822021484375
+                "x": 3.89691162109375,
+                "y": -83.50518798828125
             },
             "boxValues": {
                 "noise": 0.0,
                 "spacing": {
-                    "x": 0.0,
-                    "y": 0.0
+                    "x": 2.009999990463257,
+                    "y": 2.1399998664855959
                 },
                 "nthShift": 0.0,
                 "evenShift": 0.0,
                 "size": {
-                    "x": 0,
-                    "y": 0
+                    "x": 10,
+                    "y": 3
                 },
                 "hollow": false,
+                "supplier": true,
                 "refreshNoise": false
             },
             "arrowValues": {
@@ -86,121 +90,21 @@
                     "y": 0
                 },
                 "hollow": false,
+                "supplier": false,
                 "refreshNoise": false
             },
             "triangleValues": {
                 "noise": 0.0,
                 "spacing": {
-                    "x": 1.0,
-                    "y": 1.0
-                },
-                "nthShift": 0.0,
-                "evenShift": 0.0,
-                "rows": 1,
-                "incPerRow": 1,
-                "hollow": false,
-                "refreshNoise": false
-            }
-        },
-        {
-            "type": 2,
-            "position": {
-                "x": 24.01397705078125,
-                "y": -75.951171875
-            },
-            "boxValues": {
-                "noise": 0.0,
-                "spacing": {
                     "x": 0.0,
                     "y": 0.0
                 },
                 "nthShift": 0.0,
                 "evenShift": 0.0,
-                "size": {
-                    "x": 0,
-                    "y": 0
-                },
+                "rows": 0,
+                "incPerRow": 0,
                 "hollow": false,
-                "refreshNoise": false
-            },
-            "arrowValues": {
-                "noise": 0.0,
-                "spacing": {
-                    "x": 0.0,
-                    "y": 0.0
-                },
-                "sharpness": 0.0,
-                "nthShift": 0.0,
-                "evenShift": 0.0,
-                "size": {
-                    "x": 0,
-                    "y": 0
-                },
-                "hollow": false,
-                "refreshNoise": false
-            },
-            "triangleValues": {
-                "noise": 0.0,
-                "spacing": {
-                    "x": 1.0,
-                    "y": 1.0
-                },
-                "nthShift": 0.0,
-                "evenShift": 0.0,
-                "rows": 1,
-                "incPerRow": 1,
-                "hollow": false,
-                "refreshNoise": false
-            }
-        },
-        {
-            "type": 2,
-            "position": {
-                "x": -174.79931640625,
-                "y": 62.5479736328125
-            },
-            "boxValues": {
-                "noise": 0.0,
-                "spacing": {
-                    "x": 0.0,
-                    "y": 0.0
-                },
-                "nthShift": 0.0,
-                "evenShift": 0.0,
-                "size": {
-                    "x": 0,
-                    "y": 0
-                },
-                "hollow": false,
-                "refreshNoise": false
-            },
-            "arrowValues": {
-                "noise": 0.0,
-                "spacing": {
-                    "x": 0.0,
-                    "y": 0.0
-                },
-                "sharpness": 0.0,
-                "nthShift": 0.0,
-                "evenShift": 0.0,
-                "size": {
-                    "x": 0,
-                    "y": 0
-                },
-                "hollow": false,
-                "refreshNoise": false
-            },
-            "triangleValues": {
-                "noise": 0.0,
-                "spacing": {
-                    "x": 1.0,
-                    "y": 1.0
-                },
-                "nthShift": 0.0,
-                "evenShift": 0.0,
-                "rows": 1,
-                "incPerRow": 1,
-                "hollow": false,
+                "supplier": false,
                 "refreshNoise": false
             }
         }

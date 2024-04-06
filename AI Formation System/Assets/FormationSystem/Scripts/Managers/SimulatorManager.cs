@@ -23,6 +23,42 @@ public class SimulatorManager : MonoBehaviour
         SceneManager.LoadScene("SceneSelector");
     }
 
+    public void Attack()
+    {
+        Debug.Log("Set to attacking mode");
+        foreach(BaseFormation formation in FindObjectsOfType<BaseFormation>())
+        {
+            formation.SetFightState(FightState.Attack);
+        }
+    }
+
+    public void Hold()
+    {
+        Debug.Log("Set to holding position mode");
+        foreach (BaseFormation formation in FindObjectsOfType<BaseFormation>())
+        {
+            formation.SetFightState(FightState.Hold);
+        }
+    }
+
+    public void Flank()
+    {
+        Debug.Log("Set to flanking mode");
+        foreach (BaseFormation formation in FindObjectsOfType<BaseFormation>())
+        {
+            formation.SetFightState(FightState.Flank);
+        }
+    }
+
+    public void SplitUp()
+    {
+        Debug.Log("Spliting up formations");
+        foreach (BaseFormation formation in FindObjectsOfType<BaseFormation>())
+        {
+            formation.SetFightState(FightState.Attack);
+        }
+    }
+
     private void Awake()
     {
         if (SaveSystem.saveIndex >= 0)

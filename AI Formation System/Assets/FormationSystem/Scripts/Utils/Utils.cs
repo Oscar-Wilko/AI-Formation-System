@@ -26,6 +26,8 @@ public static class Utils
         return hitInfo.point.y;
     }
 
+    public static float RayDown(Vector3 pos) => RayDown(new Vector2(pos.x, pos.z));
+
     public static List<Vector2> NoiseArray(int size)
     {
         List<Vector2> grid = new List<Vector2>();

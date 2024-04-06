@@ -24,16 +24,22 @@ public class ArrowFormation : BaseFormation
         base.LateUpdate();
     }
 
-    public override void LoseUnit(GameObject unit)
+    public override bool CanSendSupply() => arrowValues.supplier;
+
+    public override void LoseUnit(GameObject unit, bool request_replacement)
     {
         int index = units.IndexOf(unit);
-        while (index + 1 < units.Count)
+        int min = index - index % arrowValues.size.y;
+        for(int i = index - 1; i >= min; i --)
         {
-            index++;
-            // YOU'RE AN IDIOT JUST DO X ++ or X -- AND CHECK IF IT'S ON THE END OR NOT
-            units[index - 1] = units[index];
+            units[i + 1] = units[i];
+            units[i] = null;
+            if (units[i + 1])
+                index--;
         }
-        base.LoseUnit(unit);
+        if (request_replacement && !arrowValues.supplier)
+            RequestSupply(index);
+        base.LoseUnit(unit, request_replacement);
     }
 
     private void OnDrawGizmos()
@@ -54,7 +60,7 @@ public class ArrowFormation : BaseFormation
         if (val.refreshNoise || noiseGrid.Count == 0 || noiseGrid.Count != val.size.x * val.size.y)
             noiseGrid = Utils.NoiseArray(val.size.x * val.size.y);
         val.refreshNoise = false;
-        return GeneratePositions(val, noiseGrid, angle, 90);
+        return GeneratePositions(val, noiseGrid, angle, unitType == UnitType.Ally ? 90 : 0);
     }
 
     /// <summary>
@@ -85,7 +91,10 @@ public class ArrowFormation : BaseFormation
                 pos.y += -Mathf.Abs(x - centreIndex) * val.sharpness; // Arrow shift from centre
                 pos += noiseGrid[x + y * val.size.x] * val.noise; // Noise shift
                 pos -= fullSize * 0.5f; // Shift from centre
-                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -(anglePreference + (angle - anglePreference) * 0.25f)); // Rotate to forward vec
+                float angleShift = angle - anglePreference;
+                while (angleShift > 180)
+                    angleShift -= 360;
+                pos = Utils.Rotate(pos, Mathf.Deg2Rad * -(anglePreference + (angleShift) * 0.25f)); // Rotate to forward vec
                 positions.Add(pos);
             }
         }

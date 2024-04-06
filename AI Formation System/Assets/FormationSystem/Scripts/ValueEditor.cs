@@ -88,9 +88,9 @@ public class ValueEditor : MonoBehaviour
             case ValueType.Bool:
                 bool prev_bval = bvalue;
                 if (val_toggle.isOn != bvalue)
-                    UpdateIntValue((int)val_slider.value);
+                    UpdateBoolValue(val_toggle.isOn);
                 if (prev_bval != bvalue)
-                    IntValueChanged.Invoke(ivalue);
+                    BoolValueChanged.Invoke(bvalue);
                 break;
         }
     }

@@ -19,8 +19,17 @@ public class FormationEditor : MonoBehaviour
     public UnityEvent<int> SetSizeX;
     public UnityEvent<int> SetSizeY;
     public UnityEvent<bool> SetHollow;
+    public UnityEvent<bool> SetSupplier;
 
     public DragFormation curDrag;
+
+    private CanvasGroup group;
+
+    private void Awake()
+    {
+        group = GetComponent<CanvasGroup>();
+        ToggleState(false);
+    }
 
     public void RefreshNoise(float val)
     {
@@ -114,6 +123,23 @@ public class FormationEditor : MonoBehaviour
             case FormationType.Triangle: curDrag.triV.hollow = val; break;
         }
     }
+    
+    public void RefreshSupplier(bool val)
+    {
+        switch (type)
+        {
+            case FormationType.Box: curDrag.boxV.supplier = val; break;
+            case FormationType.Arrow: curDrag.arrV.supplier = val; break;
+            case FormationType.Triangle: curDrag.triV.supplier = val; break;
+        }
+    }
+
+    public void ToggleState(bool state)
+    {
+        group.alpha = state ? 1 : 0;
+        group.blocksRaycasts = state;
+        group.interactable = state;
+    }
 
     public void Init(DragFormation dragForm)
     {
@@ -142,6 +168,7 @@ public class FormationEditor : MonoBehaviour
         SetSizeX.Invoke(vals.size.x);
         SetSizeY.Invoke(vals.size.y);
         SetHollow.Invoke(vals.hollow);
+        SetSupplier.Invoke(vals.supplier);
     }
 
     private void InitArr(ArrowValues vals)
@@ -155,6 +182,7 @@ public class FormationEditor : MonoBehaviour
         SetSizeX.Invoke(vals.size.x);
         SetSizeY.Invoke(vals.size.y);
         SetHollow.Invoke(vals.hollow);
+        SetSupplier.Invoke(vals.supplier);
     }
 
     private void InitTri(TriangleValues vals)
@@ -167,5 +195,6 @@ public class FormationEditor : MonoBehaviour
         SetRows.Invoke(vals.rows);
         SetIncPerRow.Invoke(vals.incPerRow);
         SetHollow.Invoke(vals.hollow);
+        SetSupplier.Invoke(vals.supplier);
     }
 }
