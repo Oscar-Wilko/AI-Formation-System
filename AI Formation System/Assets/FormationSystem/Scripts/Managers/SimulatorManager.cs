@@ -11,6 +11,7 @@ public class SimulatorManager : MonoBehaviour
     [SerializeField] private GameObject _arrPrefab;
     [SerializeField] private GameObject _triPrefab;
     [Header("References")]
+    [SerializeField] private List<GameObject> _maps;
     [SerializeField] private Transform _formationParent;
     [SerializeField] private Transform _startPosition;
     [Header("Tweaks")]
@@ -61,6 +62,8 @@ public class SimulatorManager : MonoBehaviour
 
     private void Awake()
     {
+        SelectMap();
+
         if (SaveSystem.saveIndex >= 0)
             Load();
     }
@@ -68,6 +71,15 @@ public class SimulatorManager : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawSphere(_targetPos, 2);
+    }
+
+    private void SelectMap()
+    {
+        int randomMap = Random.Range(0,_maps.Count);
+        for(int i = 0; i < _maps.Count; i ++)
+        {
+            _maps[i].SetActive(randomMap == i);
+        }
     }
 
     public void Load()

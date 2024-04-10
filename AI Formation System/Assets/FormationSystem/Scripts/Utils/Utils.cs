@@ -42,15 +42,17 @@ public static class Utils
 
     public static GameObject EnemyInRange(float range, Vector3 position, UnitType sourceType)
     {
-        RaycastHit[] hits = Physics.SphereCastAll(position, range, Vector3.up, 0, LayerMask.GetMask("Unit"));
+        RaycastHit[] hits = Physics.SphereCastAll(position, range, Vector3.up, 0, sourceType == UnitType.Ally ? LayerMask.GetMask("Enemy") : LayerMask.GetMask("Unit"));
         if (hits.Length == 0)
             return null;
         float closestDist = Mathf.Infinity;
         GameObject closestEnemy = null;
         foreach (RaycastHit hit in hits)
         {
+            if (hit.transform.GetComponent<Unit>().Type() == sourceType)
+                continue;
             float temp = Vector3.Distance(hit.point, position);
-            if (temp < closestDist && hit.transform.GetComponent<Unit>().Type() != sourceType)
+            if (temp < closestDist)
             {
                 closestDist = temp;
                 closestEnemy = hit.transform.gameObject;
@@ -61,7 +63,7 @@ public static class Utils
 
     public static int EnemyCountInRange(float range, Vector3 position, UnitType sourceType)
     {
-        RaycastHit[] hits = Physics.SphereCastAll(position, range, Vector3.up, 0, LayerMask.GetMask("Unit"));
+        RaycastHit[] hits = Physics.SphereCastAll(position, range, Vector3.up, 0, sourceType == UnitType.Ally ? LayerMask.GetMask("Enemy") : LayerMask.GetMask("Unit"));
         if (hits.Length == 0)
             return 0;
         int count = 0;

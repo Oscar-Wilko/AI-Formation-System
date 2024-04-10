@@ -50,6 +50,7 @@ MonoBehaviour:
   units: []
   followTarget: {fileID: 0}
   unitPrefab: {fileID: 5652320681741433874, guid: 4375d5c7ebe49dd4986e81e9c0187472, type: 3}
+  enemyVariant: {fileID: 7504671522474602813, guid: f0e83fe9252680046b277c5e25344822, type: 3}
   unitType: 0
   stepSpeed: 10
   triangleValues:

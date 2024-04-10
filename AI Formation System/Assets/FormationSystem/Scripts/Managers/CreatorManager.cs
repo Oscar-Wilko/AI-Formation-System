@@ -67,7 +67,6 @@ public class CreatorManager : MonoBehaviour
                 Vector2 recPos = obj.GetComponent<RectTransform>().anchoredPosition;
                 unit.transform.localPosition = new Vector3(pos.x * 0.1f + recPos.x * 0.01f, 0.1f, pos.y * 0.1f + recPos.y * 0.01f);
                 unit.transform.localScale = Vector3.one * 0.1f;
-                unit.GetComponent<Unit>().SetPreview();
             }
         }
     }

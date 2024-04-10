@@ -95,10 +95,8 @@ GameObject:
   - component: {fileID: 6628697276509704268}
   - component: {fileID: 7220097375892256762}
   - component: {fileID: 8100040568367334922}
-  - component: {fileID: 2054308605754705272}
-  - component: {fileID: 1174320599630845711}
   m_Layer: 7
-  m_Name: Unit
+  m_Name: UnitModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,7 +147,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 83f18aee6a5960144a42f0ff15881e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -194,56 +192,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2054308605754705272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5652320681741433874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 077147f9e49b1094a83266dedf454d0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  formationMat: {fileID: 2100000, guid: ccf00dc45fc10424dbc5e8647cc4e010, type: 2}
-  standbyMat: {fileID: 2100000, guid: 741f0a3c074ad114f805aab69e0bbecb, type: 2}
-  detectedMat: {fileID: 2100000, guid: 930e8c61f91cf4a4faac336bf9a65a76, type: 2}
-  attackingMat: {fileID: 2100000, guid: 0ef017185dc89a7468839073d033c7c7, type: 2}
-  previewMat: {fileID: 2100000, guid: 83f18aee6a5960144a42f0ff15881e4f, type: 2}
-  formationMatEnemy: {fileID: 2100000, guid: 11aa31567a276954e8393c73bcf5c311, type: 2}
-  standbyMatEnemy: {fileID: 2100000, guid: 878bf572f22f00941bf2cd197f9e6a80, type: 2}
-  detectedMatEnemy: {fileID: 2100000, guid: 1eb543f6519368942a5bb4faa9ae4948, type: 2}
-  attackingMatEnemy: {fileID: 2100000, guid: 4ba3e7bbe04d5254a9456b3ad2e81511, type: 2}
-  previewMatEnemy: {fileID: 2100000, guid: dff9597b28159824fb2488f918663555, type: 2}
-  type: 0
-  detectRange: 8
-  attackRange: 2
-  attackRate: 1
-  damage: 1
-  maxHp: 4
---- !u!195 &1174320599630845711
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5652320681741433874}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 16
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 2
 --- !u!1 &7048962423178602150
 GameObject:
   m_ObjectHideFlags: 0

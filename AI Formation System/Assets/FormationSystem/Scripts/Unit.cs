@@ -47,8 +47,6 @@ public class Unit : MonoBehaviour
     private void Update()
     {
         StateCheck();
-        if (Input.GetKeyDown(KeyCode.K) && Random.Range(0, 100) < 1)
-            TakeDamage(5);
     }
 
     private void StateCheck()

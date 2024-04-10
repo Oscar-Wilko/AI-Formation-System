@@ -21,6 +21,7 @@ public class BaseFormation : MonoBehaviour
     protected NavMeshAgent agent;
     public GameObject followTarget;
     [SerializeField] protected GameObject unitPrefab;
+    [SerializeField] protected GameObject enemyVariant;
     [Header("Tweaks")]
     public UnitType unitType;
     [SerializeField] protected float stepSpeed;
@@ -393,7 +394,7 @@ public class BaseFormation : MonoBehaviour
         foreach (Vector2 pos in grid)
         {
             float y_pos = Utils.RayDown(new Vector2(transform.position.x, transform.position.z) + pos);
-            GameObject unit = Instantiate(unitPrefab, new Vector3(transform.position.x + pos.x, y_pos + 1, transform.position.z + pos.y), Quaternion.identity, boxParent);
+            GameObject unit = Instantiate(unitType == UnitType.Ally ? unitPrefab : enemyVariant, new Vector3(transform.position.x + pos.x, y_pos + 1, transform.position.z + pos.y), Quaternion.identity, boxParent);
             unit.GetComponent<Unit>().SetSpeed(stepSpeed);
             unit.GetComponent<Unit>().SetFormation(this);
             unit.GetComponent<Unit>().SetType(unitType);

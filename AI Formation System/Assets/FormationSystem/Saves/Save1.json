@@ -343,7 +343,7 @@
                     "y": 10
                 },
                 "hollow": false,
-                "supplier": false,
+                "supplier": true,
                 "refreshNoise": false
             },
             "arrowValues": {
