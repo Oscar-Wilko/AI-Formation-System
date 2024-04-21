@@ -26,7 +26,7 @@ public class TriangleFormation : BaseFormation
 
     public override bool CanSendSupply() => triangleValues.supplier;
 
-    public override void LoseUnit(GameObject unit, bool request_replacement)
+    public override void LoseUnit(GameObject unit)
     {
         int index = units.IndexOf(unit);
         int row = RowOfIndex(index, triangleValues);
@@ -62,9 +62,8 @@ public class TriangleFormation : BaseFormation
                 index = tempIndex;
             units[tempIndex] = null;
         }
-        if (request_replacement && !triangleValues.supplier)
-            RequestSupply(index);
-        base.LoseUnit(unit, request_replacement);
+        RequestSupply(index);
+        base.LoseUnit(unit);
     }
 
     private void OnDrawGizmos()

@@ -26,7 +26,7 @@ public class ArrowFormation : BaseFormation
 
     public override bool CanSendSupply() => arrowValues.supplier;
 
-    public override void LoseUnit(GameObject unit, bool request_replacement)
+    public override void LoseUnit(GameObject unit)
     {
         int index = units.IndexOf(unit);
         int min = index - index % arrowValues.size.y;
@@ -37,9 +37,8 @@ public class ArrowFormation : BaseFormation
             if (units[i + 1])
                 index--;
         }
-        if (request_replacement && !arrowValues.supplier)
-            RequestSupply(index);
-        base.LoseUnit(unit, request_replacement);
+        RequestSupply(index);
+        base.LoseUnit(unit);
     }
 
     private void OnDrawGizmos()

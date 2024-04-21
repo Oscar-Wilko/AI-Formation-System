@@ -34,6 +34,7 @@ public class Unit : MonoBehaviour
     private float tracker = 0;
     private BaseFormation formation;
     private bool dead = false;
+    public bool INSTAKILL_DEBUG;
 
     private void Awake()
     {
@@ -47,6 +48,8 @@ public class Unit : MonoBehaviour
     private void Update()
     {
         StateCheck();
+        if (INSTAKILL_DEBUG || (Input.GetKeyDown(KeyCode.K) && Random.Range(0, 100) < 1))
+            TakeDamage(5);
     }
 
     private void StateCheck()
@@ -164,7 +167,7 @@ public class Unit : MonoBehaviour
         if (hp <= 0 && !dead)
         {
             if (formation)
-                formation.LoseUnit(gameObject, true);
+                formation.LoseUnit(gameObject);
             dead = true;
             Destroy(gameObject);
         }

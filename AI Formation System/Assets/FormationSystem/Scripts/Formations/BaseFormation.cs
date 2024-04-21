@@ -142,12 +142,13 @@ public class BaseFormation : MonoBehaviour
             SendAllUnits(units, averagePos);
 
             // Get enemy count, and ally count
-            int enemyDetectCount = Utils.EnemyCountInRange(25, transform.position, unitType);
+            Vector3 enemyPos;
+            int enemyDetectCount = Utils.EnemyCountInRange(25, transform.position, unitType, out enemyPos);
 
             // If overpowered, request backup
             if (enemyDetectCount * 2.0f > FightCount())
             {
-                RequestBackup();
+                RequestBackup(enemyPos);
             }
         }
         else if (unitType == UnitType.Ally)
@@ -193,7 +194,7 @@ public class BaseFormation : MonoBehaviour
     /// <summary>
     /// Request another formation to join the fight
     /// </summary>
-    protected void RequestBackup()
+    protected void RequestBackup(Vector3 enemyPosition)
     {
         // Get closest formation to self that isn't in a battle
         BaseFormation newGroup = null;
@@ -202,7 +203,7 @@ public class BaseFormation : MonoBehaviour
         {
             if (formation.TroopCount() == 0 || formation.InBattle())
                 continue;
-            float temp = Vector3.Distance(endTarget, formation.transform.position);
+            float temp = Vector3.Distance(enemyPosition, formation.transform.position);
             if (temp < dist)
             {
                 newGroup = formation;
@@ -300,7 +301,7 @@ public class BaseFormation : MonoBehaviour
         }
     }
 
-    public virtual void LoseUnit(GameObject unit, bool request_replacement) { }
+    public virtual void LoseUnit(GameObject unit) { }
 
     public virtual bool CanSendSupply() => false;
 
@@ -310,7 +311,7 @@ public class BaseFormation : MonoBehaviour
         float dist = float.MaxValue;
         foreach(BaseFormation formation in otherFormations)
         {
-            if (formation.TroopCount() > 0 && formation.CanSendSupply())
+            if (formation.TroopCount() > 0 && formation.CanSendSupply() && formation.transform.position.x < transform.position.x - 2)
             {
                 float temp = Vector3.Distance(transform.position, formation.transform.position);
                 if (temp < dist)
@@ -322,24 +323,30 @@ public class BaseFormation : MonoBehaviour
         }
         if (closestSupplier != null)
         {
-            units[unitIndex] = closestSupplier.SendSupply();
+            units[unitIndex] = closestSupplier.SendSupply(transform.position);
             units[unitIndex].GetComponent<Unit>().SetFormation(this);
             units[unitIndex].transform.parent = groupParent;
         }
     }
 
-    public virtual GameObject SendSupply()
+    public virtual GameObject SendSupply(Vector3 pos)
     {
+        float lowestDistance = float.MaxValue;
+        GameObject sentUnit = null;
         for(int i = units.Count - 1; i >= 0; i --)
         {
-            if (units[i])
+            if (!units[i])
+                continue;
+            float temp = units[i].GetComponent<NavMeshAgent>().remainingDistance + Vector3.Distance(pos, units[i].transform.position);
+            if (temp < lowestDistance)
             {
-                GameObject sentUnit = units[i];
-                LoseUnit(units[i], false);
-                return sentUnit;
+                lowestDistance = temp;
+                sentUnit = units[i];
             }
         }
-        return null;
+        if (sentUnit)
+            LoseUnit(sentUnit);
+        return sentUnit;
     }
 
     /// <summary>

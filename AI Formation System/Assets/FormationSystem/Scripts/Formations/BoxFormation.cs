@@ -26,7 +26,7 @@ public class BoxFormation : BaseFormation
 
     public override bool CanSendSupply() => boxValues.supplier;
 
-    public override void LoseUnit(GameObject unit, bool request_replacement)
+    public override void LoseUnit(GameObject unit)
     {
         int index = units.IndexOf(unit);
         int min = index - index % boxValues.size.y;
@@ -37,9 +37,8 @@ public class BoxFormation : BaseFormation
             if (units[i + 1])
                 index--;
         }
-        if (request_replacement && !boxValues.supplier)
-            RequestSupply(index);
-        base.LoseUnit(unit, request_replacement);
+        RequestSupply(index);
+        base.LoseUnit(unit);
     }
 
     private void OnDrawGizmos()
